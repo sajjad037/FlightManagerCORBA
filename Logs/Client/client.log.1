@@ -1,0 +1,153 @@
+2016-11-07T20:40:44.718-05:00 INFO    BookingID   FirstName   LastName        Address         Phone            Destination     Date      FlightClass      FlightId
+1           FDummy      LDummay          Saint Marc      1234567890       Washington      2016/11/07          Economy       1  
+2           FDummy      LDummay          Saint Marc      1234567890       NewDelhi      2016/11/07          Economy       2  
+ 
+2016-11-07T20:41:26.139-05:00 INFO    BookingID   FirstName   LastName        Address         Phone            Destination     Date      FlightClass      FlightId
+1           FDummy      LDummay          Saint Marc      1234567890       Montreal      2016/11/07          Economy       1  
+2           FDummy      LDummay          Saint Marc      1234567890       Washington      2016/11/07          Economy       2  
+ 
+2016-11-07T20:42:30.819-05:00 INFO    Getting BookedFlightCount for Class All.... 
+2016-11-07T20:42:30.844-05:00 INFO    NewDelhi has 2.Montreal has 2.Washington has 2. 
+2016-11-07T20:45:12.168-05:00 INFO    createFlight(seatsInFirstClass:10, seatsInBusinessClass:10, seatsInEconomyClass:10, flightDate:2016/11/07, flightTime:13;34, destinaition:Washington). 
+2016-11-07T20:45:12.183-05:00 INFO    Response [returnID=1, status=true, message=New Flight added successfully.] 
+2016-11-07T20:46:08.394-05:00 INFO    bookFlight(firstName:abc, lastName:asd, address:asdas, phone:1234567890, destination:Washington, date:2016/11/06, Class:Economy) 
+2016-11-07T20:46:08.410-05:00 INFO    Response [returnID=-1, status=false, message=Flight is not avaible with Class:Economy, Destination:Washington, DateTime :2016/11/06] 
+2016-11-07T20:47:06.844-05:00 INFO    bookFlight(firstName:av, lastName:asd, address:sadasdasd, phone:1234567890, destination:Washington, date:2016/11/07, Class:Economy) 
+2016-11-07T20:47:06.844-05:00 INFO    Response [returnID=1, status=true, message=New recode successfully added.
+Flight Seats updated Successfuly] 
+2016-11-07T20:47:59.448-05:00 INFO    createFlight(seatsInFirstClass:10, seatsInBusinessClass:10, seatsInEconomyClass:10, flightDate:2016/11/07, flightTime:13;12, destinaition:Washington). 
+2016-11-07T20:47:59.464-05:00 INFO    Response [returnID=1, status=true, message=New Flight added successfully.] 
+2016-11-07T20:48:56.445-05:00 INFO    bookFlight(firstName:ad, lastName:asd, address:asdasd, phone:1234567890, destination:Washington, date:2016/11/07, Class:Economy) 
+2016-11-07T20:48:56.461-05:00 INFO    Response [returnID=1, status=true, message=New recode successfully added.
+Flight Seats updated Successfuly] 
+2016-11-07T20:49:18.347-05:00 INFO    Getting BookedFlightCount for Class All.... 
+2016-11-07T20:49:18.361-05:00 INFO    NewDelhi has 1.Montreal has 1.Washington has 0. 
+2016-11-07T20:50:13.983-05:00 INFO    transferFlight(passengerID:1, currentCity:NewDelhi, otherCity:Montreal) 
+2016-11-07T20:50:14.032-05:00 INFO    Response [returnID=-1, status=true, message=Response [returnID=2, status=true, message=New recode successfully added.
+Flight Seats updated Successfuly], 1 records are deleted successfully from Passengers Data.] 
+2016-11-07T20:50:35.281-05:00 INFO    Getting BookedFlightCount for Class All.... 
+2016-11-07T20:50:35.302-05:00 INFO    NewDelhi has 0.Montreal has 2.Washington has 0. 
+2016-11-07T20:52:57.933-05:00 INFO    BookingID   FirstName   LastName        Address         Phone            Destination     Date      FlightClass      FlightId
+1           av      asd          sadasdasd      1234567890       Washington      2016/11/07          Economy       1  
+2           ad      asd          asdasd      1234567890       Washington      2016/11/07          Economy       1  
+ 
+2016-11-07T20:53:19.334-05:00 INFO    BookingID   FirstName   LastName        Address         Phone            Destination     Date      FlightClass      FlightId
+1           av      asd          sadasdasd      1234567890       Washington      2016/11/07          Economy       1  
+2           ad      asd          asdasd      1234567890       Washington      2016/11/07          Economy       1  
+ 
+2016-11-07T20:55:49.831-05:00 INFO    editFlightRecord(recordID:1, fieldName:seatsInEconomyClass, newValue:0). 
+2016-11-07T20:55:49.847-05:00 INFO    Response [returnID=-1, status=true, message=] 
+2016-11-07T20:56:06.901-05:00 INFO    Getting BookedFlightCount for Class All.... 
+2016-11-07T20:56:06.909-05:00 INFO    Montreal has 2.Washington has 0.NewDelhi has 0. 
+2016-11-07T20:57:26.947-05:00 INFO    createFlight(seatsInFirstClass:10, seatsInBusinessClass:19, seatsInEconomyClass:10, flightDate:2016/11/07, flightTime:13;12, destinaition:Washington). 
+2016-11-07T20:57:26.947-05:00 INFO    Response [returnID=2, status=true, message=New Flight added successfully.] 
+2016-11-07T20:59:35.862-05:00 INFO    transferFlight(passengerID:1, currentCity:Washington, otherCity:Montreal) 
+2016-11-07T20:59:35.893-05:00 INFO    Response [returnID=-1, status=false, message=No Booking data.] 
+2016-11-07T21:00:45.499-05:00 INFO    bookFlight(firstName:abc, lastName:asd, address:asdasdasd, phone:1234567901, destination:Washington, date:2016/11/07, Class:Economy) 
+2016-11-07T21:00:45.499-05:00 INFO    Response [returnID=2, status=true, message=New recode successfully added.
+Flight Seats updated Successfuly] 
+2016-11-07T21:02:33.007-05:00 INFO    transferFlight(passengerID:2, currentCity:Montreal, otherCity:NewDelhi) 
+2016-11-07T21:02:33.040-05:00 INFO    Response [returnID=-1, status=true, message=Response [returnID=3, status=true, message=New recode successfully added.
+Flight Seats updated Successfuly], 1 records are deleted successfully from Passengers Data.] 
+2016-11-07T21:03:11.994-05:00 INFO    transferFlight(passengerID:2, currentCity:NewDelhi, otherCity:Montreal) 
+2016-11-07T21:03:12.012-05:00 INFO    Response [returnID=-1, status=false, message=Response [returnID=-1, status=false, message=No Flight aviable in Economy Class.]] 
+2016-11-07T21:03:20.841-05:00 INFO    BookingID   FirstName   LastName        Address         Phone            Destination     Date      FlightClass      FlightId
+2           abc      asd          asdasdasd      1234567901       Washington      2016/11/07          Economy       1  
+3           ad      asd          asdasd      1234567890       Washington      2016/11/07          Economy       1  
+ 
+2016-11-07T21:04:15.759-05:00 INFO    editFlightRecord(recordID:1, fieldName:flightDate, newValue:2016/11/07). 
+2016-11-07T21:04:15.759-05:00 INFO    Response [returnID=-1, status=true, message=] 
+2016-11-07T21:04:31.022-05:00 INFO    transferFlight(passengerID:2, currentCity:NewDelhi, otherCity:Montreal) 
+2016-11-07T21:04:31.050-05:00 INFO    Response [returnID=-1, status=false, message=Response [returnID=-1, status=false, message=No Flight aviable in Economy Class.]] 
+2016-11-07T21:04:40.024-05:00 INFO    BookingID   FirstName   LastName        Address         Phone            Destination     Date      FlightClass      FlightId
+2           abc      asd          asdasdasd      1234567901       Washington      2016/11/07          Economy       1  
+3           ad      asd          asdasd      1234567890       Washington      2016/11/07          Economy       1  
+ 
+2016-11-07T21:04:45.837-05:00 INFO    FlightID   Destination   Source        Date         Time     Fist   Business   Economy  
+1          Washington      NewDelhi      2016/11/07   13;12    10      7          10       
+2          Washington      NewDelhi      2016/11/07   13;12    10      19          10       
+ 
+2016-11-07T21:05:08.608-05:00 INFO    BookingID   FirstName   LastName        Address         Phone            Destination     Date      FlightClass      FlightId
+2           ad      asd          asdasd      1234567890       Washington      2016/11/07          Economy       1  
+ 
+2016-11-07T21:05:16.495-05:00 INFO    FlightID   Destination   Source        Date         Time     Fist   Business   Economy  
+1          Washington      Montreal      2016/11/07   13;34    10      8          0       
+ 
+2016-11-07T21:06:14.482-05:00 INFO    BookingID   FirstName   LastName        Address         Phone            Destination     Date      FlightClass      FlightId
+2           abc      asd          asdasdasd      1234567901       Washington      2016/11/07          Economy       1  
+3           ad      asd          asdasd      1234567890       Washington      2016/11/07          Economy       1  
+ 
+2016-11-07T21:07:11.401-05:00 INFO    editFlightRecord(recordID:1, fieldName:seatsInBusinessClass, newValue:0). 
+2016-11-07T21:07:11.401-05:00 INFO    Response [returnID=-1, status=true, message=] 
+2016-11-07T21:07:33.119-05:00 INFO    editFlightRecord(recordID:1, fieldName:seatsInFirstClass, newValue:0). 
+2016-11-07T21:07:33.119-05:00 INFO    Response [returnID=-1, status=true, message=] 
+2016-11-07T21:08:12.389-05:00 INFO    transferFlight(passengerID:2, currentCity:NewDelhi, otherCity:Montreal) 
+2016-11-07T21:08:12.417-05:00 INFO    Response [returnID=-1, status=false, message=Response [returnID=-1, status=false, message=The 1 is Full for Class:Economy.]] 
+2016-11-07T21:09:39.982-05:00 INFO    editFlightRecord(recordID:1, fieldName:seatsInEconomyClass, newValue:1). 
+2016-11-07T21:09:39.998-05:00 INFO    Response [returnID=-1, status=true, message=] 
+2016-11-07T21:09:59.520-05:00 INFO    transferFlight(passengerID:2, currentCity:NewDelhi, otherCity:Montreal) 
+2016-11-07T21:09:59.548-05:00 INFO    Response [returnID=-1, status=false, message=Response [returnID=-1, status=false, message=The 1 is Full for Class:Economy.]] 
+2016-11-07T21:10:15.112-05:00 INFO    FlightID   Destination   Source        Date         Time     Fist   Business   Economy  
+1          Washington      Montreal      2016/11/07   13;34    0      -2          1       
+ 
+2016-11-07T21:10:41.901-05:00 INFO    editFlightRecord(recordID:1, fieldName:seatsInBusinessClass, newValue:0). 
+2016-11-07T21:10:41.901-05:00 INFO    Response [returnID=-1, status=true, message=] 
+2016-11-07T21:10:43.810-05:00 INFO    BookingID   FirstName   LastName        Address         Phone            Destination     Date      FlightClass      FlightId
+2           ad      asd          asdasd      1234567890       Washington      2016/11/07          Economy       1  
+ 
+2016-11-07T21:10:47.292-05:00 INFO    FlightID   Destination   Source        Date         Time     Fist   Business   Economy  
+1          Washington      Montreal      2016/11/07   13;34    0      -2          1       
+ 
+2016-11-07T21:11:07.617-05:00 INFO    editFlightRecord(recordID:1, fieldName:seatsInEconomyClass, newValue:0). 
+2016-11-07T21:11:07.633-05:00 INFO    Response [returnID=-1, status=true, message=] 
+2016-11-07T21:11:19.875-05:00 INFO    FlightID   Destination   Source        Date         Time     Fist   Business   Economy  
+1          Washington      NewDelhi      2016/11/07   13;12    10      7          10       
+2          Washington      NewDelhi      2016/11/07   13;12    10      19          10       
+ 
+2016-11-07T21:11:50.339-05:00 INFO    transferFlight(passengerID:2, currentCity:NewDelhi, otherCity:Montreal) 
+2016-11-07T21:11:50.367-05:00 INFO    Response [returnID=-1, status=false, message=Response [returnID=-1, status=false, message=The 1 is Full for Class:Economy.]] 
+2016-11-07T21:17:18.112-05:00 INFO    BookingID   FirstName   LastName        Address         Phone            Destination     Date      FlightClass      FlightId
+2           abc      asd          asdasdasd      1234567901       Washington      2016/11/07          Economy       1  
+3           ad      asd          asdasd      1234567890       Washington      2016/11/07          Economy       1  
+ 
+2016-11-07T21:17:43.988-05:00 INFO    transferFlight(passengerID:2, currentCity:NewDelhi, otherCity:Montreal) 
+2016-11-07T21:17:44.025-05:00 INFO    Response [returnID=-1, status=false, message=Response [returnID=-1, status=false, message=The 1 is Full for Class:Economy.]] 
+2016-11-07T21:18:38.641-05:00 INFO    Getting BookedFlightCount for Class ALL.... 
+2016-11-07T21:18:38.655-05:00 INFO    NewDelhi has 2.Montreal has 1.Washington has 0. 
+2016-11-07T21:21:20.500-05:00 INFO    createFlight(seatsInFirstClass:10, seatsInBusinessClass:10, seatsInEconomyClass:10, flightDate:2016/11/07, flightTime:13;12, destinaition:Washington). 
+2016-11-07T21:21:20.500-05:00 INFO    Response [returnID=2, status=true, message=New Flight added successfully.] 
+2016-11-07T21:22:14.385-05:00 INFO    createFlight(seatsInFirstClass:10, seatsInBusinessClass:10, seatsInEconomyClass:10, flightDate:2016/11/07, flightTime:13;12, destinaition:Washington). 
+2016-11-07T21:22:14.401-05:00 INFO    Response [returnID=1, status=true, message=New Flight added successfully.] 
+2016-11-07T21:23:09.446-05:00 INFO    bookFlight(firstName:abc, lastName:abc, address:asd, phone:1234567890, destination:Washington, date:2016/11/07, Class:Economy) 
+2016-11-07T21:23:09.446-05:00 INFO    Response [returnID=1, status=true, message=New recode successfully added.
+Flight Seats updated Successfuly] 
+2016-11-07T21:24:04.915-05:00 INFO    createFlight(seatsInFirstClass:10, seatsInBusinessClass:10, seatsInEconomyClass:10, flightDate:2016/11/07, flightTime:13;13, destinaition:Washington). 
+2016-11-07T21:24:04.931-05:00 INFO    Response [returnID=1, status=true, message=New Flight added successfully.] 
+2016-11-07T21:25:14.451-05:00 INFO    bookFlight(firstName:abc, lastName:asd, address:asd, phone:1234567890, destination:Washington, date:2016/11/07, Class:Economy) 
+2016-11-07T21:25:14.460-05:00 INFO    Response [returnID=1, status=true, message=New recode successfully added.
+Flight Seats updated Successfuly] 
+2016-11-07T21:25:50.114-05:00 INFO    Getting BookedFlightCount for Class All.... 
+2016-11-07T21:25:50.128-05:00 INFO    NewDelhi has 1.Montreal has 1.Washington has 0. 
+2016-11-07T21:26:11.099-05:00 INFO    transferFlight(passengerID:1, currentCity:NewDelhi, otherCity:Montreal) 
+2016-11-07T21:26:11.127-05:00 INFO    Response [returnID=-1, status=true, message=Response [returnID=2, status=true, message=New recode successfully added.
+Flight Seats updated Successfuly], 1 records are deleted successfully from Passengers Data.] 
+2016-11-07T21:26:32.479-05:00 INFO    Getting BookedFlightCount for Class All.... 
+2016-11-07T21:26:32.492-05:00 INFO    NewDelhi has 0.Montreal has 2.Washington has 0. 
+2016-11-07T21:27:26.751-05:00 INFO    editFlightRecord(recordID:1, fieldName:seatsInFirstClass, newValue:0). 
+2016-11-07T21:27:26.766-05:00 INFO    Response [returnID=-1, status=true, message=] 
+2016-11-07T21:27:41.880-05:00 INFO    editFlightRecord(recordID:1, fieldName:seatsInBusinessClass, newValue:0). 
+2016-11-07T21:27:41.880-05:00 INFO    Response [returnID=-1, status=true, message=] 
+2016-11-07T21:27:58.383-05:00 INFO    editFlightRecord(recordID:1, fieldName:seatsInEconomyClass, newValue:0). 
+2016-11-07T21:27:58.398-05:00 INFO    Response [returnID=-1, status=true, message=] 
+2016-11-07T21:28:16.803-05:00 INFO    Getting BookedFlightCount for Class All.... 
+2016-11-07T21:28:16.826-05:00 INFO    Montreal has 2.Washington has 0.NewDelhi has 0. 
+2016-11-07T21:30:03.493-05:00 INFO    bookFlight(firstName:abc, lastName:asdasd, address:asdasd, phone:1234567890, destination:Washington, date:2016/11/07, Class:Economy) 
+2016-11-07T21:30:03.508-05:00 INFO    Response [returnID=2, status=true, message=New recode successfully added.
+Flight Seats updated Successfuly] 
+2016-11-07T21:30:50.610-05:00 INFO    transferFlight(passengerID:2, currentCity:NewDelhi, otherCity:Montreal) 
+2016-11-07T21:30:50.634-05:00 INFO    Response [returnID=-1, status=false, message=Response [returnID=-1, status=false, message=The 1 is Full for Class:Economy.]] 
+2016-11-07T21:31:08.131-05:00 INFO    Getting BookedFlightCount for Class All.... 
+2016-11-07T21:31:08.153-05:00 INFO    NewDelhi has 1.Montreal has 2.Washington has 0. 
+2016-11-07T22:59:58.471-05:00 INFO    transferFlight(passengerID:1, currentCity:Montreal, otherCity:NewDelhi) 
+2016-11-07T22:59:58.565-05:00 INFO    Response [returnID=-1, status=true, message=Response [returnID=3, status=true, message=New recode successfully added.
+Flight Seats updated Successfuly], 1 records are deleted successfully from Passengers Data.] 
