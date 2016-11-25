@@ -403,10 +403,10 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 				if (!serverConfig.serverName.equals(ServerName)) {
 
 					// Save Flight
-					createFlight("system", 5, 10, 20, "2016/11/07", "13;14", serverConfig.serverName);
+					createFlight("system", 5, 10, 20, "2016/11/22", "13;14", serverConfig.serverName);
 
 					// Book Fight
-					bookFlight("FDummy", "LDummay", "Saint Marc", "1234567890", serverConfig.serverName, "2016/11/07",
+					bookFlight("FDummy", "LDummay", "Saint Marc", "1234567890", serverConfig.serverName, "2016/11/22",
 							"Economy");
 				}
 			}

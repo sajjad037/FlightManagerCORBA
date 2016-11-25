@@ -151,3 +151,23 @@ Flight Seats updated Successfuly]
 2016-11-07T22:59:58.471-05:00 INFO    transferFlight(passengerID:1, currentCity:Montreal, otherCity:NewDelhi) 
 2016-11-07T22:59:58.565-05:00 INFO    Response [returnID=-1, status=true, message=Response [returnID=3, status=true, message=New recode successfully added.
 Flight Seats updated Successfuly], 1 records are deleted successfully from Passengers Data.] 
+2016-11-22T22:07:10.211-05:00 SEVERE  an exception was thrown 
+2016-11-22T22:09:14.074-05:00 INFO    Getting BookedFlightCount for Class All.... 
+2016-11-22T22:09:14.121-05:00 INFO    Montreal has 2.Washington has 2.NewDelhi has 2. 
+2016-11-22T22:10:02.886-05:00 INFO    bookFlight(firstName:asd, lastName:asd, address:asd, phone:1234567890, destination:NewDelhi, date:2016/11/22, Class:Economy) 
+2016-11-22T22:10:02.886-05:00 INFO    Response [returnID=3, status=true, message=New recode successfully added.
+Flight Seats updated Successfuly] 
+2016-11-22T22:10:40.773-05:00 INFO    Getting BookedFlightCount for Class All.... 
+2016-11-22T22:10:40.795-05:00 INFO    Montreal has 3.Washington has 2.NewDelhi has 2. 
+2016-11-22T22:11:07.667-05:00 INFO    BookingID   FirstName   LastName        Address         Phone            Destination     Date      FlightClass      FlightId
+3           asd      asd          asd      1234567890       NewDelhi      2016/11/22          Economy       2  
+1           FDummy      LDummay          Saint Marc      1234567890       Washington      2016/11/22          Economy       1  
+2           FDummy      LDummay          Saint Marc      1234567890       NewDelhi      2016/11/22          Economy       2  
+ 
+2016-11-22T22:11:48.783-05:00 INFO    transferFlight(passengerID:3, currentCity:Washington, otherCity:NewDelhi) 
+2016-11-22T22:11:48.814-05:00 INFO    Response [returnID=-1, status=false, message=] 
+2016-11-22T22:12:02.496-05:00 INFO    transferFlight(passengerID:3, currentCity:Montreal, otherCity:Washington) 
+2016-11-22T22:12:02.545-05:00 INFO    Response [returnID=-1, status=true, message=Response [returnID=3, status=true, message=New recode successfully added.
+Flight Seats updated Successfuly], 1 records are deleted successfully from Passengers Data.] 
+2016-11-22T22:12:11.310-05:00 INFO    Getting BookedFlightCount for Class All.... 
+2016-11-22T22:12:11.320-05:00 INFO    Montreal has 2.Washington has 3.NewDelhi has 2. 

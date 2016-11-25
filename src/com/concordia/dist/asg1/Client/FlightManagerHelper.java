@@ -491,7 +491,7 @@ public class FlightManagerHelper {
 
 		try {
 			System.out.println("\n**** Home -> Flight Details ****\n");
-			// flgOpImp = connectToServer(serverName);
+			flgOpImp = connectToServer(serverName);
 			response = flgOpImp.editFlightRecord("-1:" + managerID, Enums.FlightFileds.flightDetail.toString(), "");
 			System.out.println(response);
 			clogger.log(response);
