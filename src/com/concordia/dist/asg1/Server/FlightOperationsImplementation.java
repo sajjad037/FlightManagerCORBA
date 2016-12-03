@@ -61,7 +61,8 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 				date, flightClass);
 
 		clogger.log(response.toString());
-		return response.toString();
+		//return response.toString();
+		return response.status+StaticContent.VALUES_SEPARATOR+response.returnID;
 	}
 
 	@Override
@@ -124,7 +125,7 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 	}
 
 	@Override
-	public String editFlightRecord(String recordID, String fieldName, String newValue) {
+	/*public String editFlightRecord(String recordID, String fieldName, String newValue) {
 		String reply = "";
 		String[] strArray = recordID.split(":");
 		recordID = strArray[0];
@@ -171,8 +172,58 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 
 		clogger.log(reply);
 		return reply;
-	}
+	}*/
+	public String editFlightRecord(String recordID, String fieldName, String newValue) {
+		String reply = "";
+		String[] strArray = recordID.split(":");
+		recordID = strArray[0];
+		String managerID = strArray[1];
 
+		clogger.log(
+				"editFlightRecord(recordID:" + recordID + ", fieldName:" + fieldName + ", newValue:" + newValue + ").");
+
+		Enums.FlightFileds operation = Enums.getEnumFlightFiledsFromString(fieldName);
+
+		switch (operation) {
+		case createFlight:
+			String[] arr = newValue.split(":");
+			// IstCls , BusCls , EconCls , Date , Time , destination.
+			reply = createFlight(managerID, Integer.parseInt(arr[0]), Integer.parseInt(arr[1]),
+					Integer.parseInt(arr[2]), arr[3], arr[4], arr[5]);
+			break;
+		case deleteFlight:
+			int flightID = Integer.parseInt(newValue);
+			reply = deleteFlight(managerID, flightID);
+			break;
+		case flightDetail:
+			reply = flightDetails();
+			break;
+		case bookingDetail:
+			reply = getBookingDetails();
+			break;
+
+		case flightDate:
+		case flightTime:
+		case destinaition:
+		case source:
+		case seatsInFirstClass:
+		case seatsInBusinessClass:
+		case seatsInEconomyClass:
+			Response response = flightService.editFlightRecord(passengerService, Integer.parseInt(recordID), fieldName,
+					newValue);
+			//reply = response.toString();
+			reply = response.status+StaticContent.VALUES_SEPARATOR+response.returnID;
+			break;
+
+		default:
+			//reply = " This Operation is not defined.";
+			reply = false+"";
+			break;
+		}
+
+		clogger.log(reply);
+		return reply;
+	}
 	@Override
 	public String transferReservation(String passengerID, String currentCity, String otherCity) {
 		// String flightID = "";
@@ -234,7 +285,8 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 			response.status = false;
 		}
 
-		return response.toString();
+		//return response.toString();
+		return response.status +"";
 	}
 
 	// public Response updateBooking(int bookingId, boolean isCanceled) {
@@ -251,7 +303,8 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 	public String getLocalFlightCount(String recordType) {
 		int count = passengerService.getBookedFlightCount(recordType);
 		clogger.log("getLocalFlightCount(recordType:" + recordType + ") => " + count + ".");
-		return ServerName + " has " + count + ".";
+		//return ServerName + " has " + count + ".";
+		return StaticContent.getShortServerName(ServerName) + " " + count + ", ";
 	}
 
 	/**
@@ -275,7 +328,8 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 		Response response = flightService.createFlight(seatsInFirstClass, seatsInBusinessClass, seatsInEconomyClass,
 				flightDate, flightTime, _destinaition, ServerName);
 		clogger.log(response.toString());
-		return response.toString();
+		//return response.toString();
+		return response.status+StaticContent.VALUES_SEPARATOR+response.returnID;
 	}
 
 	/**
@@ -289,7 +343,8 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 		clogger.log(ManagerID + " is requesting deleteFlight(flightID:" + flightID + ")");
 		Response response = flightService.deleteFlight(passengerService, flightID);
 		clogger.log(response.toString());
-		return response.toString();
+		//return response.toString();
+		return response.status+"";
 	}
 
 	/**

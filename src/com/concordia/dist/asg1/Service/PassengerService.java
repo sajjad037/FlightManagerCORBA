@@ -1,9 +1,14 @@
 package com.concordia.dist.asg1.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.concordia.dist.asg1.DAL.PassengerDal;
 import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.Models.Passenger;
 import com.concordia.dist.asg1.Models.Response;
+import com.concordia.dist.asg1.StaticContent.StaticContent;
+import com.concordia.dist.asg1.Utilities.FileStorage;
 
 /**
  * Service layer for Passengers, Perform Necessary Function Before and After
@@ -15,12 +20,22 @@ import com.concordia.dist.asg1.Models.Response;
 public class PassengerService {
 
 	private PassengerDal passengerDal;
+	private String fileName = "";
 
 	/**
 	 * Constructor of PassengerService
 	 */
 	public PassengerService() {
 		passengerDal = new PassengerDal();
+	}
+
+	public PassengerService(String ServerName) {
+		this.fileName = ServerName + "Booking.txt";
+		if (StaticContent.Save_TO_FILES) {
+			passengerDal = new PassengerDal(loadBooking());
+		} else {
+			passengerDal = new PassengerDal();
+		}
 	}
 
 	/**
@@ -55,6 +70,7 @@ public class PassengerService {
 
 			// if Succeed
 			if (response.status) {
+				saveBooking();
 				String oldMsg = response.message;
 				int bookingId = response.returnID;
 				// update Flights Seats
@@ -85,7 +101,21 @@ public class PassengerService {
 	 * @return
 	 */
 	public Response deleteAllBookingForFlight(int flightID) {
-		return passengerDal.deleteAllBookingForFlight(flightID);
+		Response response = passengerDal.deleteAllBookingForFlight(flightID);
+		if (response.status) {
+			saveBooking();
+		}
+		return response;
+	}
+
+	public Response editFlightRecordChanges(int flightID, Enums.Class flightClass, int newSeats) {
+		Response response = passengerDal.editFlightRecordChanges(flightID, flightClass, newSeats);
+
+		if (response.status) {
+			saveBooking();
+		}
+
+		return response;
 	}
 
 	// private Response isvalidBooking(int bookingId) {
@@ -101,11 +131,11 @@ public class PassengerService {
 	public Response getBookingDetails(int bookingId) {
 		return passengerDal.getBookingDetails(bookingId);
 	}
+
 	public Passenger getBookingDetailObject(int bookingId) {
 		return passengerDal.getBookingDetailObject(bookingId);
 	}
 
-	
 	/**
 	 * Delete a Booking
 	 * 
@@ -113,7 +143,11 @@ public class PassengerService {
 	 * @return
 	 */
 	public Response deleteBooking(int bookingID) {
-		return passengerDal.deleteBooking(bookingID);
+		Response response = passengerDal.deleteBooking(bookingID);
+		if (response.status) {
+			saveBooking();
+		}
+		return response;
 	}
 
 	/**
@@ -162,4 +196,13 @@ public class PassengerService {
 	// return response;
 	// }
 
+	private void saveBooking() {
+		if (StaticContent.Save_TO_FILES) {
+			new FileStorage().SaveBookingData(passengerDal.getPassengerData(), this.fileName);
+		}
+	}
+
+	private HashMap<String, ArrayList<Passenger>> loadBooking() {
+		return new FileStorage().ReadBookingData(this.fileName);
+	}
 }

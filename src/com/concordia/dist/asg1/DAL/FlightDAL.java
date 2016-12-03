@@ -5,6 +5,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.Models.Flight;
 import com.concordia.dist.asg1.Models.Response;
+import com.concordia.dist.asg1.Utilities.FileStorage;
 
 /**
  * Data access Layer Handle Flights data.
@@ -24,6 +25,10 @@ public class FlightDAL {
 		if (this.flightsData == null) {
 			this.flightsData = new CopyOnWriteArrayList<Flight>();
 		}
+	}
+
+	public FlightDAL(CopyOnWriteArrayList<Flight> flightsData) {
+		this.flightsData = flightsData;
 	}
 
 	/**
@@ -299,6 +304,31 @@ public class FlightDAL {
 		return response;
 	}
 
+	public Response isFlightAvailable(Enums.FlightCities destination, String date) {
+		Response response = new Response();
+		response.status = false;
+		response.message = "No flight is aviable.";
+		if (flightsData != null && flightsData.size() > 0) {
+			for (int i = 0; i < flightsData.size(); i++) {
+				Flight flightInfo = flightsData.get(i);
+				if (flightInfo.getDestinaition().equals(destination) && flightInfo.getFlightDate().equals(date)) {
+					response.status = true;
+					response.returnID = flightInfo.getFlightID();
+					response.message = "Flight is Aviable or exist.";
+					break;
+				} else {
+					response.status = false;
+					response.message = "Flight is not avaible for  " + flightInfo.getDestinaition().toString()
+							+ " Destintation.";
+				}
+			}
+		} else {
+			response.status = false;
+			response.message = "There is no flight data.";
+		}
+		return response;
+	}
+
 	/**
 	 * decrement Flight Seats
 	 * 
@@ -439,5 +469,20 @@ public class FlightDAL {
 	// public int getLastFlightID() {
 	// return lastFlightID;
 	// }
+
+	/**
+	 * @return the flightsData
+	 */
+	public CopyOnWriteArrayList<Flight> getFlightsData() {
+		return flightsData;
+	}
+
+	/**
+	 * @param flightsData
+	 *            the flightsData to set
+	 */
+	public void setFlightsData(CopyOnWriteArrayList<Flight> flightsData) {
+		this.flightsData = flightsData;
+	}
 
 }

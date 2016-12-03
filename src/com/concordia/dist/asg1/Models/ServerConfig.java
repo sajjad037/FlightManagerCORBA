@@ -21,6 +21,6 @@ public class ServerConfig {
 	public String toString() {
 		return "ServerConfig [serverName=" + serverName + ", shortServerName=" + shortServerName + ", rmiPort="
 				+ rmiPort + ", udpPort=" + udpPort + "]";
-	}
+	}	
 
 }

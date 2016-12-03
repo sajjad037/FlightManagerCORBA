@@ -65,7 +65,7 @@ public class ServiceLayerTest {
 	public void EditFlightInfo() {
 		// 10, 10, 20, "2016/10/18", "13:14", "Montreal", "Washington"
 		String newDate = "2016/10/22";
-		response = flightService.editFlightRecord(flightID, Enums.FlightFileds.flightDate.toString(), newDate);
+		response = flightService.editFlightRecord(passengerService, flightID, Enums.FlightFileds.flightDate.toString(), newDate);
 		assertTrue(response.status);
 
 		Flight flightInfo = flightService.getFlight(flightID);
@@ -136,7 +136,7 @@ public class ServiceLayerTest {
 		Thread t1 = new Thread(new Runnable() {
 			public void run() {
 				newDate = "2016/10/18";
-				response = flightService.editFlightRecord(flightID, Enums.FlightFileds.flightDate.toString(), newDate);
+				response = flightService.editFlightRecord(passengerService, flightID, Enums.FlightFileds.flightDate.toString(), newDate);
 				assertTrue(response.status);
 			}
 		});
@@ -145,7 +145,7 @@ public class ServiceLayerTest {
 
 			public void run() {
 				newDate = "2016/10/19";
-				response = flightService.editFlightRecord(flightID, Enums.FlightFileds.flightDate.toString(), newDate);
+				response = flightService.editFlightRecord(passengerService, flightID, Enums.FlightFileds.flightDate.toString(), newDate);
 				assertTrue(response.status);
 			}
 		});
@@ -153,7 +153,7 @@ public class ServiceLayerTest {
 		Thread t3 = new Thread(new Runnable() {
 			public void run() {
 				newDate = "2016/10/20";
-				response = flightService.editFlightRecord(flightID, Enums.FlightFileds.flightDate.toString(), newDate);
+				response = flightService.editFlightRecord(passengerService,flightID, Enums.FlightFileds.flightDate.toString(), newDate);
 				assertTrue(response.status);
 			}
 		});

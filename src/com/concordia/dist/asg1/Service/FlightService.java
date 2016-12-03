@@ -3,10 +3,14 @@
  */
 package com.concordia.dist.asg1.Service;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import com.concordia.dist.asg1.DAL.FlightDAL;
 import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.Models.Flight;
 import com.concordia.dist.asg1.Models.Response;
+import com.concordia.dist.asg1.StaticContent.StaticContent;
+import com.concordia.dist.asg1.Utilities.FileStorage;
 
 /**
  * Service layer for Flights, Perform Necessary Function Before and After saving
@@ -18,12 +22,23 @@ import com.concordia.dist.asg1.Models.Response;
 public class FlightService {
 
 	private FlightDAL flightDAL;
+	private String fileName = "";
 
 	/**
 	 * FlightService Constructor
 	 */
 	public FlightService() {
 		flightDAL = new FlightDAL();
+	}
+
+	public FlightService(String ServerName) {
+		this.fileName = ServerName + "Flights.txt";
+		if (StaticContent.Save_TO_FILES) {
+			flightDAL = new FlightDAL(loadFlights());
+		} else {
+			flightDAL = new FlightDAL();
+		}
+
 	}
 
 	/**
@@ -42,15 +57,24 @@ public class FlightService {
 			String flightDate, String flightTime, String _destinaition, String _source) {
 		Response response = new Response();
 		int bookedFirstClassSeats = 0, bookedBusinessClassSeats = 0, bookedEconomyClassSeats = 0;
-		Enums.FlightCities destinaition = Enums.getFlightCitiesFromString(_destinaition);
+		Enums.FlightCities destination = Enums.getFlightCitiesFromString(_destinaition);
 		Enums.FlightCities source = Enums.getFlightCitiesFromString(_source);
 
+		//check flight is already exist
+//		response = isFlightAvailable(destination, flightDate);
+//		if(response.status)
+//		{
+//			return response;
+//		}
+		
 		Flight flightInfo = new Flight(bookedFirstClassSeats, bookedBusinessClassSeats, bookedEconomyClassSeats,
-				seatsInFirstClass, seatsInBusinessClass, seatsInEconomyClass, flightDate, flightTime, destinaition,
+				seatsInFirstClass, seatsInBusinessClass, seatsInEconomyClass, flightDate, flightTime, destination,
 				source);
 
 		response = flightDAL.CreateFlight(flightInfo);
-
+		if (response.status) {
+			saveFlights();
+		}
 		return response;
 	}
 
@@ -64,6 +88,8 @@ public class FlightService {
 	public Response deleteFlight(PassengerService passengerService, int flightID) {
 		Response response = flightDAL.deleteFlight(flightID);
 		if (response.status) {
+			saveFlights();
+
 			String oldMsg = response.message;
 
 			// remove entries of this flight from Passenger.
@@ -91,8 +117,40 @@ public class FlightService {
 	 * @return
 	 */
 
-	public Response editFlightRecord(int recordID, String fieldName, String newValue) {
-		return flightDAL.editFlightRecord(recordID, fieldName, newValue);
+	public Response editFlightRecord(PassengerService passengerService, int recordID, String fieldName,
+			String newValue) {
+		Response response = flightDAL.editFlightRecord(recordID, fieldName, newValue);
+		if (response.status) {
+			saveFlights();
+
+			// passengerService
+			if (fieldName.equals("seatsInFirstClass") || fieldName.equals("seatsInBusinessClass")
+					|| fieldName.equals("seatsInEconomyClass")) {
+				Enums.Class _class = null;
+				switch (fieldName) {
+				case "seatsInFirstClass":
+					_class = Enums.Class.First;
+					break;
+				case "seatsInBusinessClass":
+					_class = Enums.Class.Business;
+					break;
+				case "seatsInEconomyClass":
+					_class = Enums.Class.Economy;
+					break;
+
+				default:
+					break;
+				}
+				int bookedCount = passengerService.getBookedFlightCount(_class.toString());
+				int newFlightSeats = Integer.parseInt(newValue);
+				if (newFlightSeats < bookedCount) {
+					int seatToDelete = bookedCount - newFlightSeats;
+					passengerService.editFlightRecordChanges(recordID, _class, seatToDelete);
+				}
+
+			}
+		}
+		return response;
 	}
 
 	/**
@@ -106,9 +164,13 @@ public class FlightService {
 	public Response isFlightAvailable(Enums.FlightCities destination, String date, Enums.Class class1) {
 		return flightDAL.isFlightAvailable(destination, date, class1);
 	}
+	
+	public Response isFlightAvailable(Enums.FlightCities destination, String date) {
+		return flightDAL.isFlightAvailable(destination, date);
+	}
 
 	/**
-	 * decrement Flight Seats
+	 * Increment or decrement Flight Seats
 	 * 
 	 * @param flightID
 	 * @param class1
@@ -116,7 +178,11 @@ public class FlightService {
 	 */
 
 	public Response updateFlightSeats(int flightID, Enums.Class class1, boolean isDecrement) {
-		return flightDAL.updateFlightSeats(flightID, class1, isDecrement);
+		Response response = flightDAL.updateFlightSeats(flightID, class1, isDecrement);
+		if (response.status) {
+			saveFlights();
+		}
+		return response;
 	}
 
 	/**
@@ -138,4 +204,13 @@ public class FlightService {
 		return flightDAL.getFlightsData(flightID);
 	}
 
+	private void saveFlights() {
+		if (StaticContent.Save_TO_FILES) {
+			new FileStorage().SaveFlightData(flightDAL.getFlightsData(), this.fileName);
+		}
+	}
+
+	private CopyOnWriteArrayList<Flight> loadFlights() {
+		return new FileStorage().ReadFlightData(this.fileName);
+	}
 }

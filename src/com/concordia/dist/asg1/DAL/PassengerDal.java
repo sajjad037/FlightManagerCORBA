@@ -10,6 +10,7 @@ import java.util.Set;
 import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.Models.Passenger;
 import com.concordia.dist.asg1.Models.Response;
+import com.concordia.dist.asg1.Utilities.FileStorage;
 
 /**
  * Data access Layer Handle Passengers data.
@@ -31,6 +32,10 @@ public class PassengerDal {
 		if (this.passengerData == null) {
 			this.passengerData = new HashMap<String, ArrayList<Passenger>>();
 		}
+	}
+
+	public PassengerDal(HashMap<String, ArrayList<Passenger>> passengerData) {
+		this.passengerData = passengerData;
 	}
 
 	/**
@@ -151,6 +156,81 @@ public class PassengerDal {
 					if (passengerList.get(index).getFlightId() == flightId) {
 						indexToRemove.add(index);
 						++countDelete;
+					}
+				}
+
+				// Look if we need to remove an remove from passenger
+				// information.
+				int count = indexToRemove.size();
+				if (count > 0) {
+					for (int j = 0; j < count; j++) {
+						Passenger info = passengerList.get(j);
+						boolean statu = passengerList.remove(info);
+					}
+
+					if (passengerList.size() > 0) {
+						passengerData.put(key, passengerList);
+					} else {
+						keysToRemove.add(key);
+					}
+					// reset index remove list
+					indexToRemove = new ArrayList<Integer>();
+				}
+				// System.out.print(me.getKey() + ": ");
+				// System.out.println(me.getValue());
+			}
+
+			// Look for if we need to remove a key
+			if (keysToRemove.size() > 0) {
+				for (int idx = 0; idx < keysToRemove.size(); idx++) {
+					passengerData.remove(keysToRemove.get(idx));
+				}
+			}
+
+			if (countDelete > 0) {
+				response.status = true;
+				response.message = countDelete + " records are deleted successfully from Passengers Data.";
+			} else {
+				response.status = false;
+				response.message = "0 records is deleted for that FlightID:" + flightId;
+			}
+			// }
+		} else {
+			response.status = false;
+			response.message = "There is no Passcenger data to Delete.";
+		}
+		return response;
+	}
+
+	public Response editFlightRecordChanges(int flightId, Enums.Class flightClass, int seatToDelete) {
+		Response response = new Response();
+		int countDelete = 0;
+		if (passengerData.size() > 0) {
+
+			Map map = Collections.synchronizedMap(passengerData);
+			Set set = map.entrySet();
+			// synchronized (map) {
+			Iterator i = set.iterator();
+
+			ArrayList<String> keysToRemove = new ArrayList<String>();
+			;
+			ArrayList<Integer> indexToRemove;
+
+			while (i.hasNext()) {
+				indexToRemove = new ArrayList<Integer>();
+
+				Map.Entry me = (Map.Entry) i.next();
+				String key = me.getKey().toString();
+				ArrayList<Passenger> passengerList = (ArrayList<Passenger>) me.getValue();
+
+				for (int index = 0; index < passengerList.size(); index++) {
+					if (passengerList.get(index).getFlightId() == flightId
+							&& passengerList.get(index).getclass().equals(flightClass)) {						
+						if (seatToDelete != 0) {
+							--seatToDelete;
+							indexToRemove.add(index);
+							++countDelete;
+						}
 					}
 				}
 
@@ -322,9 +402,9 @@ public class PassengerDal {
 		}
 		return response;
 	}
-	
+
 	public Passenger getBookingDetailObject(int bookingId) {
-		Passenger passenger = null; 
+		Passenger passenger = null;
 		if (passengerData != null && passengerData.size() > 0) {
 
 			Map map = Collections.synchronizedMap(passengerData);
@@ -349,7 +429,7 @@ public class PassengerDal {
 				}
 			}
 			// }
-		} 
+		}
 		return passenger;
 	}
 
@@ -483,6 +563,14 @@ public class PassengerDal {
 	 */
 	public HashMap<String, ArrayList<Passenger>> getPassengerData() {
 		return passengerData;
+	}
+
+	/**
+	 * @param passengerData
+	 *            the passengerData to set
+	 */
+	public void setPassengerData(HashMap<String, ArrayList<Passenger>> passengerData) {
+		this.passengerData = passengerData;
 	}
 
 	/**
