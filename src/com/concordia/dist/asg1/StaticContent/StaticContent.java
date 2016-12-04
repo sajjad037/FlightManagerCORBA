@@ -1,5 +1,6 @@
 package com.concordia.dist.asg1.StaticContent;
 
+import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.Models.ServersList;
 import com.concordia.dist.asg1.Utilities.FileStorage;
 
@@ -104,4 +105,30 @@ public class StaticContent {
 		}
 		return serversConfigurations;
 	}
+	
+	public static String getShortServerName(String serverName){
+		String shortserverName= "";
+		if(serverName.equals(null))
+			return shortserverName;
+		
+		Enums.FlightCities _serverName = Enums.getFlightCitiesFromString(serverName);
+		switch (_serverName) {
+		case Montreal:
+			shortserverName = "MTL";
+			break;
+		case Washington:
+			shortserverName = "WST";
+			break;
+		case NewDelhi:
+			shortserverName = "NDL";
+			break;
+
+		default:
+			break;
+		}
+		
+		return shortserverName;
+}
+	
+
 }

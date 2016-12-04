@@ -6,6 +6,17 @@ import java.net.InetAddress;
 import java.util.logging.Logger;
 
 import org.omg.CORBA.ORB;
+import org.omg.CORBA.ORBPackage.InvalidName;
+import org.omg.CosNaming.NameComponent;
+import org.omg.CosNaming.NamingContextExt;
+import org.omg.CosNaming.NamingContextExtHelper;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
+import org.omg.PortableServer.POA;
+import org.omg.PortableServer.POAHelper;
+import org.omg.PortableServer.POAManagerPackage.AdapterInactive;
+import org.omg.PortableServer.POAPackage.ServantNotActive;
+import org.omg.PortableServer.POAPackage.WrongPolicy;
 
 import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.Models.Passenger;
@@ -16,6 +27,8 @@ import com.concordia.dist.asg1.Service.PassengerService;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.CLogger;
 
+import Corba.FlightOperations;
+import Corba.FlightOperationsHelper;
 import Corba.FlightOperationsPOA;
 
 /**
@@ -31,25 +44,89 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 	private PassengerService passengerService;
 	private CLogger clogger;
 	private Logger LOGGER = Logger.getLogger(MainServer.class.getName());
-	private ORB orb;
+	private static ORB orb;
 
+	
+	public FlightOperationsImplementation() {
+	
+	}
 	/**
 	 * Constructor
 	 * 
 	 * @param UDPPort
 	 * @param ServerName
 	 */
-	public FlightOperationsImplementation(int UDPPort, String ServerName) {
+//	public FlightOperationsImplementation(int UDPPort, String ServerName) {
+//		this.UDPPort = UDPPort;
+//		this.ServerName = ServerName;
+//
+//		flightService = new FlightService();
+//		passengerService = new PassengerService();
+//
+//		// initialize logger
+//		clogger = new CLogger(LOGGER, "Server/" + this.ServerName + ".log");
+//
+//	}
+	
+	
+	public void startServer(String serverName, int UDPPort, String[] orbArgs) {
+		//FlightOperationsImplementation myServer = new FlightOperationsImplementation();
+		  
+		
 		this.UDPPort = UDPPort;
-		this.ServerName = ServerName;
+		this.ServerName = serverName;
 
 		flightService = new FlightService();
 		passengerService = new PassengerService();
 
 		// initialize logger
 		clogger = new CLogger(LOGGER, "Server/" + this.ServerName + ".log");
+		
+		  // create and initialize the ORB
+		  orb = ORB.init(orbArgs, null);
 
-	}
+		  try {
+		   this.initServer(orb, orbArgs, serverName, UDPPort);
+		  } catch (InvalidName | AdapterInactive | ServantNotActive | WrongPolicy
+		    | org.omg.CosNaming.NamingContextPackage.InvalidName | NotFound | CannotProceed e) {
+		   // TODO Auto-generated catch block
+		   e.printStackTrace();
+		  }
+
+		  
+		  Thread orbRunThread = new Thread(new Runnable() {
+		   public void run() {
+		   orb.run();
+		   }
+		  });
+		   
+		 
+		 }
+	
+	public void initServer(ORB orb, String[] args, String serverName, int udpPortNumber) throws InvalidName, AdapterInactive, ServantNotActive, WrongPolicy, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, CannotProceed  {
+	  
+		
+		// get reference to rootpoa &amp;
+		POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
+		// activate the POAManager
+		rootpoa.the_POAManager().activate();
+
+		// create servant and register it with the ORB
+		//FlightOperationsImplementation flgOpImp = new FlightOperationsImplementation(udpPortNumber, serverName);
+		this.mainFunc();
+		this.setORB(orb);
+
+		// get object reference from the servant
+		org.omg.CORBA.Object ref = rootpoa.servant_to_reference(this);
+		FlightOperations href = FlightOperationsHelper.narrow(ref);
+
+		org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+		NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+
+		NameComponent path[] = ncRef.to_name(serverName);
+		ncRef.rebind(path, href);
+
+	 }
 
 	@Override
 	public String bookFlight(String firstName, String lastName, String address, String phone, String destination,
@@ -483,7 +560,7 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 			startUDPServer();
 
 			// save some Dummy Data
-			saveDummyData();
+			//saveDummyData();
 
 			// Get Flight Data
 			// System.out.println(ServerName+"\r\n "+flightDetails());

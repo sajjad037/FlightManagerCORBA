@@ -126,23 +126,23 @@ public class MainServer {
 			org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, CannotProceed {
 
 		// get reference to rootpoa &amp;
-		POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
-		// activate the POAManager
-		rootpoa.the_POAManager().activate();
-
-		// create servant and register it with the ORB
-		FlightOperationsImplementation flgOpImp = new FlightOperationsImplementation(udpPortNumber, serverName);
-		flgOpImp.mainFunc();
-		flgOpImp.setORB(orb);
-
-		// get object reference from the servant
-		org.omg.CORBA.Object ref = rootpoa.servant_to_reference(flgOpImp);
-		FlightOperations href = FlightOperationsHelper.narrow(ref);
-
-		org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
-		NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-
-		NameComponent path[] = ncRef.to_name(serverName);
-		ncRef.rebind(path, href);
+//		POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
+//		// activate the POAManager
+//		rootpoa.the_POAManager().activate();
+//
+//		// create servant and register it with the ORB
+//		FlightOperationsImplementation flgOpImp = new FlightOperationsImplementation(udpPortNumber, serverName);
+//		flgOpImp.mainFunc();
+//		flgOpImp.setORB(orb);
+//
+//		// get object reference from the servant
+//		org.omg.CORBA.Object ref = rootpoa.servant_to_reference(flgOpImp);
+//		FlightOperations href = FlightOperationsHelper.narrow(ref);
+//
+//		org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+//		NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+//
+//		NameComponent path[] = ncRef.to_name(serverName);
+//		ncRef.rebind(path, href);
 	}
 }

@@ -8,12 +8,12 @@ import java.net.DatagramSocket;
 
 import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.Models.UDPMessage;
+import com.concordia.dist.asg1.Server.FlightOperationsImplementation;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.CLogger;
 
 import ReliableUDP.Reciever;
 import ReliableUDP.Sender;
-import Server.FlightServer;
 
 /*
  * Reason of this class: 
@@ -80,7 +80,7 @@ public class ReplicaListner implements Runnable {
 					replyMessage = new UDPMessage(this.machineName, udpMessage.getSequencerNumber(),
 							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 
-					FlightServer obj = ReplicaMain.servers.get(udpMessage.getServerName().toString());
+					FlightOperationsImplementation obj = ReplicaMain.servers.get(udpMessage.getServerName().toString());
 					String res = "";
 					switch (udpMessage.getOpernation()) {
 

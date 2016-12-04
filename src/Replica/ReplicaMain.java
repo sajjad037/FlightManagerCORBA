@@ -10,15 +10,16 @@ import java.util.logging.Logger;
 
 import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.Models.UDPMessage;
+import com.concordia.dist.asg1.Server.FlightOperationsImplementation;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.CLogger;
 
-import Server.FlightServer;
+
 
 public class ReplicaMain {
 	private static CLogger clogger;
 	private final static Logger LOGGER = Logger.getLogger(ReplicaMain.class.getName());
-	public static HashMap<String, FlightServer> servers = new HashMap<String, FlightServer>();
+	public static HashMap<String, FlightOperationsImplementation> servers = new HashMap<String, FlightOperationsImplementation>();
 
 	/*
 	 * Reason of this class: 1) Create MTL, WSL, NDH server objects using ORB.
@@ -63,13 +64,13 @@ public class ReplicaMain {
 	}
 
 	private void createServerObjects(String[] orbArgs, boolean restoreBackup) {
-		FlightServer montreal = new FlightServer();
-		FlightServer washington = new FlightServer();
-		FlightServer newDelhi = new FlightServer();
+		FlightOperationsImplementation montreal = new FlightOperationsImplementation();
+		FlightOperationsImplementation washington = new FlightOperationsImplementation();
+		FlightOperationsImplementation newDelhi = new FlightOperationsImplementation();
 
-		montreal.startServer(Enums.FlightCities.Montreal.toString(), "", orbArgs);
-		washington.startServer(Enums.FlightCities.Washington.toString(), "", orbArgs);
-		newDelhi.startServer(Enums.FlightCities.NewDelhi.toString(), "", orbArgs);
+		montreal.startServer(Enums.FlightCities.Montreal.toString(), Enums.UDPPort.Montreal.getNumVal(), orbArgs);
+		washington.startServer(Enums.FlightCities.Washington.toString(), Enums.UDPPort.Montreal.getNumVal(), orbArgs);
+		newDelhi.startServer(Enums.FlightCities.NewDelhi.toString(), Enums.UDPPort.Montreal.getNumVal(), orbArgs);
 
 		servers.put(Enums.FlightCities.Montreal.toString(), montreal);
 		servers.put(Enums.FlightCities.Washington.toString(), washington);
@@ -127,7 +128,7 @@ public class ReplicaMain {
 					replyMessage = new UDPMessage(Enums.UDPSender.ReplicaUmer, udpMessage.getSequencerNumber(),
 							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 
-					FlightServer obj = ReplicaMain.servers.get(udpMessage.getServerName().toString());
+					FlightOperationsImplementation obj = ReplicaMain.servers.get(udpMessage.getServerName().toString());
 					String res = "";
 					switch (udpMessage.getOpernation()) {
 
