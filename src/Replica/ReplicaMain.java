@@ -47,8 +47,8 @@ public class ReplicaMain {
 			System.out.println(msg);
 
 			// Start UDP Server
-			ReplicaListner server = new ReplicaListner(clogger, StaticContent.REPLICA_UMER_lISTENING_PORT,
-					Enums.UDPSender.ReplicaUmer);
+			ReplicaListner server = new ReplicaListner(clogger, StaticContent.REPLICA_SAJJAD_lISTENING_PORT,
+					Enums.UDPSender.ReplicaSajjad);
 			server.start();
 
 			createServerObjects(corbaArgs, restoreBackup);
@@ -69,8 +69,8 @@ public class ReplicaMain {
 		FlightOperationsImplementation newDelhi = new FlightOperationsImplementation();
 
 		montreal.startServer(Enums.FlightCities.Montreal.toString(), Enums.UDPPort.Montreal.getNumVal(), orbArgs);
-		washington.startServer(Enums.FlightCities.Washington.toString(), Enums.UDPPort.Montreal.getNumVal(), orbArgs);
-		newDelhi.startServer(Enums.FlightCities.NewDelhi.toString(), Enums.UDPPort.Montreal.getNumVal(), orbArgs);
+		washington.startServer(Enums.FlightCities.Washington.toString(), Enums.UDPPort.Washington.getNumVal(), orbArgs);
+		newDelhi.startServer(Enums.FlightCities.NewDelhi.toString(), Enums.UDPPort.NewDelhi.getNumVal(), orbArgs);
 
 		servers.put(Enums.FlightCities.Montreal.toString(), montreal);
 		servers.put(Enums.FlightCities.Washington.toString(), washington);
@@ -114,7 +114,7 @@ public class ReplicaMain {
 	private void restoreLogFile(UDPMessage udpMessage)
 	{
 	
-			String msg = Enums.UDPSender.ReplicaUmer + " Restore in process!";
+			String msg = Enums.UDPSender.ReplicaSajjad + " Restore in process!";
 			UDPMessage replyMessage = null;
 			
 				switch (udpMessage.getSender()) {
@@ -125,7 +125,7 @@ public class ReplicaMain {
 					System.out.println(msg);
 					clogger.log(msg);
 					
-					replyMessage = new UDPMessage(Enums.UDPSender.ReplicaUmer, udpMessage.getSequencerNumber(),
+					replyMessage = new UDPMessage(Enums.UDPSender.ReplicaSajjad, udpMessage.getSequencerNumber(),
 							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 
 					FlightOperationsImplementation obj = ReplicaMain.servers.get(udpMessage.getServerName().toString());
@@ -194,7 +194,7 @@ public class ReplicaMain {
 	}
 
 	public static void main(String[] args) {
-		ReplicaMain main = new ReplicaMain(true);
+		ReplicaMain main = new ReplicaMain(false);
 
 	}
 }

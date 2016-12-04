@@ -554,7 +554,7 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 	public void mainFunc() {
 		try {
 			// exportServer(args);
-			String msg = ServerName + " RMI Server is Up! and running";
+			String msg = ServerName + "  Server is Up! and running";
 			System.out.println(msg);
 
 			startUDPServer();
