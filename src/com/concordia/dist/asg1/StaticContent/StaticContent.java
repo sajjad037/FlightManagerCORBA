@@ -1,6 +1,5 @@
 package com.concordia.dist.asg1.StaticContent;
 
-import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.Models.ServersList;
 import com.concordia.dist.asg1.Utilities.FileStorage;
 
@@ -16,6 +15,8 @@ public class StaticContent {
 	private static ServersList serversConfigurations;
 	public static final String BASE_PATH = "C:/FlightManagerWebService/";
 	public static final boolean Save_TO_FILES = false;
+	
+	public static final String RM_TRANSACTION_LOGS_PATH = "Logs/Replica/transactions/";
 	
 	public static final int UDP_REQUEST_BUFFER_SIZE = 4000;
 	public static final int UDP_RECEIVE_TIMEOUT = 3000;
@@ -45,37 +46,48 @@ public class StaticContent {
 	
 	//Configurations	
 	public static final String FRONT_END_IP_ADDRESS = "127.0.0.1";
-	public static final int FRONT_END_lISTENING_PORT = 1010;
-	public static final int FRONT_END_ACK_PORT = 1010;
+	public static final int FRONT_END_lISTENING_PORT = 5501;
+	public static final int FRONT_END_ACK_PORT = 5502;
 	
 	public static final String SEQUENCER_IP_ADDRESS = "127.0.0.1";
-	public static final int SEQUENCER_lISTENING_PORT = 5555;
-	public static final int SEQUENCER_ACK_PORT = 5556;
+	public static final int SEQUENCER_lISTENING_PORT = 5551;
+	public static final int SEQUENCER_ACK_PORT = 5552;
+	public static final int SEQUENCER_ACK_PORT_FOR_REPLICA_ULAN = 5560;
+	public static final int SEQUENCER_ACK_PORT_FOR_REPLICA_SAJJAD = 5561;
+	public static final int SEQUENCER_ACK_PORT_FOR_REPLICA_UMER = 5562;
+	public static final int SEQUENCER_ACK_PORT_FOR_REPLICA_FERAS = 5563;
+	
+	public static final int FRONTEND_ACK_PORT_FOR_REPLICA_UMER = 5564;
+
 	
 	public static final String RM1_IP_ADDRESS = "127.0.0.1";
-	public static final int RM1_lISTENING_PORT = 1012;
+	public static final int RM1_lISTENING_PORT = 5051;
 	
 	public static final String RM2_IP_ADDRESS = "127.0.0.1";
-	public static final int RM2_lISTENING_PORT = 1013;
+	public static final int RM2_lISTENING_PORT = 5052;
 
 	public static final String RM3_IP_ADDRESS = "127.0.0.1";
-	public static final int RM3_lISTENING_PORT = 1014;
+	public static final int RM3_lISTENING_PORT = 5053;
 
 	public static final String RM4_IP_ADDRESS = "127.0.0.1";
-	public static final int RM4_lISTENING_PORT = 1015;
+	public static final int RM4_lISTENING_PORT = 5054;
 	
 	
 	public static final String REPLICA_ULAN_IP_ADDRESS = "127.0.0.1";
-	public static final int REPLICA_ULAN_lISTENING_PORT = 1016;
+	public static final int REPLICA_ULAN_lISTENING_PORT = 5001;
+	public static final int REPLICA_ULAN_HEARTBEAT_ACK_PORT = 5008;
 	
 	public static final String REPLICA_SAJJAD_IP_ADDRESS = "127.0.0.1";
-	public static final int REPLICA_SAJJAD_lISTENING_PORT = 1017;
+	public static final int REPLICA_SAJJAD_lISTENING_PORT = 5002;
+	public static final int REPLICA_SAJJAD_HEARTBEAT_ACK_PORT = 5007;
 	
 	public static final String REPLICA_UMER_IP_ADDRESS = "127.0.0.1";
-	public static final int REPLICA_UMER_lISTENING_PORT = 1018;
+	public static final int REPLICA_UMER_lISTENING_PORT = 5003;
+	public static final int REPLICA_UMER_HEARTBEAT_ACK_PORT = 5005;
 	
 	public static final String REPLICA_FERAS_IP_ADDRESS = "127.0.0.1";
-	public static final int REPLICA_FERAS_lISTENING_PORT = 1019;
+	public static final int REPLICA_FERAS_lISTENING_PORT = 5004;
+	public static final int REPLICA_FERAS_HEARTBEAT_ACK_PORT = 5006;
 	
 	
 	
@@ -91,29 +103,5 @@ public class StaticContent {
 			serversConfigurations = (new FileStorage()).LoadServerConfigurations();
 		}
 		return serversConfigurations;
-	}
-	
-	public static String getShortServerName(String serverName){
-		String shortserverName= "";
-		if(serverName.equals(null))
-			return shortserverName;
-		
-		Enums.FlightCities _serverName = Enums.getFlightCitiesFromString(serverName);
-		switch (_serverName) {
-		case Montreal:
-			shortserverName = "MTL";
-			break;
-		case Washington:
-			shortserverName = "WST";
-			break;
-		case NewDelhi:
-			shortserverName = "NDL";
-			break;
-
-		default:
-			break;
-		}
-		
-		return shortserverName;
 	}
 }
