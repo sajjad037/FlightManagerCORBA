@@ -40,7 +40,41 @@ public class MainServer {
 	/**
 	 * @param args
 	 */
+	
+		
 	public static void main(String[] args) {
+		try {
+			// initialize logger
+			clogger = new CLogger(LOGGER, "Server/server.log");
+
+			clogger.log("Server strat Initiated.");
+
+			// Read Configuration File
+			clogger.log("Reading Server Configurations.");
+			int size = StaticContent.getServersList().serverConfigList.size();
+
+			// create and initialize the ORB
+			ORB orb = ORB.init(args, null);
+
+			// String Server through loops
+			for (int i = 0; i < size; i++) {
+				ServerConfig serverConfig = StaticContent.getServersList().serverConfigList.get(i);
+				startSerevr(orb, args, serverConfig.udpPort, serverConfig.serverName);
+			}
+
+			clogger.log("All " + size + " Servers are started Successfully.");
+			for (;;) {
+				orb.run();
+			}
+
+		} catch (Exception ex) {
+			clogger.logException("On Server Start.", ex);
+			ex.printStackTrace();
+		}
+
+	}
+	
+	public void StartMain(String[] args) {
 		try {
 			// initialize logger
 			clogger = new CLogger(LOGGER, "Server/server.log");
