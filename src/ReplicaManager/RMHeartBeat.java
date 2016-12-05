@@ -23,11 +23,12 @@ public class RMHeartBeat extends TimerTask {
 
 			Sender s = new Sender(StaticContent.REPLICA_SAJJAD_IP_ADDRESS, StaticContent.REPLICA_SAJJAD_lISTENING_PORT,
 					false, socket);
+			System.out.println("Sending heartbeat on port: "+StaticContent.REPLICA_SAJJAD_lISTENING_PORT);
 			if (s.send(hearBeatmsg)) {
 				// release Port
 				
 				ReplicaManagerMain.isReplicaAlive = true;
-				
+				System.out.println("HeartBeat successfully sent to Replica.");
 				if (socket != null && !socket.isClosed())
 					socket.close();
 			} else {

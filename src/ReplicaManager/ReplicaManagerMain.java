@@ -7,7 +7,6 @@ import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.CLogger;
 
-import Replica.ReplicaListner;
 import Replica.ReplicaMain;
 
 /*
@@ -30,16 +29,16 @@ public class ReplicaManagerMain {
 		try {
 			// initialize logger
 			clogger = new CLogger(LOGGER, "ReplicaManager/ReplicaManager.log");
-			msg = " Replica is UP!";
+			msg = "ReplicaManager is UP!";
 			clogger.log(msg);
 			System.out.println(msg);
 
 			// Start UDP Server
-			ReplicaListner server = new ReplicaListner(clogger, StaticContent.REPLICA_SAJJAD_lISTENING_PORT,
+			ReplicaManagerListner server = new ReplicaManagerListner(clogger, StaticContent.RM3_lISTENING_PORT,
 					Enums.UDPSender.ReplicaSajjad);
 			server.start();
 			// server.executeTestMessage();
-			server.join();
+			//server.join();
 
 			if (myReplicaInstance == null)
 				myReplicaInstance = new ReplicaMain(false);

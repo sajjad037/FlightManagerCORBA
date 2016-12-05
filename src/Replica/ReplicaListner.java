@@ -15,6 +15,7 @@ import com.concordia.dist.asg1.Utilities.CLogger;
 import ReliableUDP.Reciever;
 import ReliableUDP.Sender;
 
+
 /*
  * Reason of this class: 
  * 1) Listen to all incoming messages from sequencer and respective RM. - DONE
@@ -48,7 +49,9 @@ public class ReplicaListner implements Runnable {
 
 			System.out.println(msg);
 			clogger.log(msg);
-			recSocket = new DatagramSocket(port);
+			recSocket = new DatagramSocket(this.port);
+			System.out.println("Replica Listner Port: "+port);
+			
 			while (continueUDP) {
 
 				// Reciever r = new Reciever(port,
@@ -57,10 +60,14 @@ public class ReplicaListner implements Runnable {
 				Reciever r = new Reciever(recSocket);
 				UDPMessage udpMessage = r.getData();
 
-				long tempSeq = sequencerNumber + 1;
-				if (tempSeq != udpMessage.getSequencerNumber()) {
-					continue;
+				if(!udpMessage.getOpernation().equals(Enums.Operations.heatBeat))
+				{
+					long tempSeq = sequencerNumber + 1;
+					if (tempSeq != udpMessage.getSequencerNumber()) {
+						continue;
+					}
 				}
+				
 
 				// Increment the sequence number.
 				sequencerNumber++;
@@ -121,10 +128,15 @@ public class ReplicaListner implements Runnable {
 					}
 					break;
 
-				case RMUlan:
-				case RMSajjad:
-				case RMUmer:
-				case RMFeras:
+				case ReplicaUlan:
+				case ReplicaSajjad:
+				case ReplicaUmer:
+				case ReplicaFeras:
+					msg = "Executing Opernation : " + udpMessage.getOpernation() + ", on Server :"
+							+ udpMessage.getServerName();
+					System.out.println(msg);
+					clogger.log(msg);
+					
 					fromSequencer = false;
 					replyMessage = new UDPMessage(this.machineName, udpMessage.getSequencerNumber(),
 							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);

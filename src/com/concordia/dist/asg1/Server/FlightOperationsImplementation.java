@@ -44,7 +44,9 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 	private PassengerService passengerService;
 	private CLogger clogger;
 	private Logger LOGGER = Logger.getLogger(MainServer.class.getName());
-	private static ORB orb;
+	private static ORB orb; 
+	Thread udpServerThread = null;
+	DatagramSocket udpSocket = null;
 
 	
 	public FlightOperationsImplementation() {
@@ -82,6 +84,17 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 		// initialize logger
 		clogger = new CLogger(LOGGER, "Server/" + this.ServerName + ".log");
 		
+		
+		 if(udpServerThread != null)
+		  {
+		   udpSocket.close();
+		   udpServerThread.stop();
+		  }
+		  if(orb == null)
+		  {
+		   orb.shutdown(false);
+		  }
+		  
 		  // create and initialize the ORB
 		  orb = ORB.init(orbArgs, null);
 
@@ -477,7 +490,8 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 	 * Start UDP Server
 	 */
 	public void startUDPServer() {
-		new Thread(new UDPResponder()).start();
+		udpServerThread = new Thread(new UDPResponder());
+		udpServerThread.start();
 	}
 
 	/**
@@ -579,11 +593,11 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 	 */
 	public class UDPResponder implements Runnable {
 
-		private DatagramSocket serverSocket;
+		//private DatagramSocket serverSocket;
 
 		public void run() {
 			try {
-				serverSocket = new DatagramSocket(UDPPort);
+				udpSocket = new DatagramSocket(UDPPort);
 				byte[] receiveData = new byte[1024];
 				byte[] sendData = new byte[1024];
 				String msg = ServerName + " UDP Server Is UP!";
@@ -593,7 +607,7 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 				while (true) {
 					// Read request
 					DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-					serverSocket.receive(receivePacket);
+					udpSocket.receive(receivePacket);
 					String request = new String(receivePacket.getData());
 
 					// Clear received buffer
@@ -639,7 +653,7 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 
 					sendData = capitalizedSentence.getBytes();
 					DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
-					serverSocket.send(sendPacket);
+					udpSocket.send(sendPacket);
 
 					// Clear Send buffer
 					sendData = new byte[1024];

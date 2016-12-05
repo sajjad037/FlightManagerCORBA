@@ -10,8 +10,6 @@ import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.CLogger;
 import com.concordia.dist.asg1.Utilities.Serializer;
 
-
-
 public class ReplicaManagerListner implements Runnable {
 	private CLogger clogger;
 	private DatagramSocket serverSocket;
@@ -33,7 +31,7 @@ public class ReplicaManagerListner implements Runnable {
 			serverSocket = new DatagramSocket(port);
 			byte[] receiveData = new byte[StaticContent.UDP_REQUEST_BUFFER_SIZE];
 			// byte[] sendData = new byte[SIZE_BUFFER_REQUEST];
-			String msg = machineName.toString() + " UDP Server Is UP!";
+			String msg = machineName.toString() + " Manager UDP Server Is UP!";
 
 			System.out.println(msg);
 			clogger.log(msg);
@@ -60,12 +58,11 @@ public class ReplicaManagerListner implements Runnable {
 							softwareFailureCount = 0;
 							ReplicaManager.ReplicaManagerMain.restartReplica();
 						}
-					} else if(false)
-					{
-						//Hardware failure occured.
+					} else if (false) {
+						// Hardware failure occured.
 						softwareFailureCount = 0;
 						ReplicaManager.ReplicaManagerMain.restartReplica();
-						
+
 					}
 
 					break;
