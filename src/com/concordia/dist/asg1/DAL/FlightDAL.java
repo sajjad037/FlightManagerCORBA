@@ -2,10 +2,11 @@ package com.concordia.dist.asg1.DAL;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.Flight;
-import com.concordia.dist.asg1.Models.Response;
 import com.concordia.dist.asg1.Utilities.FileStorage;
+
+import Models.Enums;
+import Models.Flight;
+import Models.Response;
 
 /**
  * Data access Layer Handle Flights data.

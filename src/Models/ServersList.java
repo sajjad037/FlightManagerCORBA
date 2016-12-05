@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.concordia.dist.asg1.Models;
+package Models;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,9 @@
 package com.concordia.dist.asg1.StaticContent;
 
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.ServersList;
 import com.concordia.dist.asg1.Utilities.FileStorage;
+
+import Models.Enums;
+import Models.ServersList;
 
 /**
  * save all type of Static string, data etc.

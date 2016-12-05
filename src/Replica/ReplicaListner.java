@@ -9,12 +9,14 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Arrays;
 
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.UDPMessage;
 import com.concordia.dist.asg1.Server.FlightOperationsImplementation;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.CLogger;
 import com.concordia.dist.asg1.Utilities.Serializer;
+
+import Models.Enums;
+import Models.UDPMessage;
+
 
 
 
@@ -65,6 +67,7 @@ public class ReplicaListner implements Runnable {
 				recSocket.receive(receivePacket);
 
 				byte[] message = Arrays.copyOf(receivePacket.getData(), receivePacket.getLength());
+				//System.out.println("Reply Ack received from FE: " + new String(message));	
 				UDPMessage udpMessage = Serializer.deserialize(message);
 				UDPMessage ackMessage = null;
 				// Clear received buffer
@@ -80,7 +83,7 @@ public class ReplicaListner implements Runnable {
 						sequencerNumber++;
 
 						// Reply the caller with ack.
-						ackMessage = new UDPMessage(Enums.UDPSender.ReplicaUmer, udpMessage.getSequencerNumber(),
+						ackMessage = new UDPMessage(Enums.UDPSender.ReplicaSajjad, udpMessage.getSequencerNumber(),
 								udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 						ackMessage.setStatus(true);
 						byte[] sendData = Serializer.serialize(ackMessage);

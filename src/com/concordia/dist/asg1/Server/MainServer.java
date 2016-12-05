@@ -15,12 +15,12 @@ import org.omg.PortableServer.POAManagerPackage.AdapterInactive;
 import org.omg.PortableServer.POAPackage.ServantNotActive;
 import org.omg.PortableServer.POAPackage.WrongPolicy;
 
-import com.concordia.dist.asg1.Models.ServerConfig;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.CLogger;
 
 import Corba.FlightOperations;
 import Corba.FlightOperationsHelper;
+import Models.ServerConfig;
 
 /**
  * @author SajjadAshrafCan

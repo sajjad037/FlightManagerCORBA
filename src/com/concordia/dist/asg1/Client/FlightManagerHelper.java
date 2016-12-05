@@ -14,9 +14,6 @@ import org.omg.CosNaming.NamingContextExtHelper;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.Enums.FlightCities;
-import com.concordia.dist.asg1.Models.ServerConfig;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.CLogger;
 import com.concordia.dist.asg1.Utilities.FileStorage;
@@ -24,6 +21,9 @@ import com.concordia.dist.asg1.Utilities.InputValidation;
 
 import Corba.FlightOperations;
 import Corba.FlightOperationsHelper;
+import Models.Enums;
+import Models.ServerConfig;
+import Models.Enums.FlightCities;
 
 /**
  * This Class is a helper or Initiate servers function for client.

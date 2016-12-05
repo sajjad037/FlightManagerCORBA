@@ -8,10 +8,11 @@ import java.net.SocketTimeoutException;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.UDPMessage;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.Serializer;
+
+import Models.Enums;
+import Models.UDPMessage;
 
 public class TestReplica {
 
@@ -46,8 +47,8 @@ public class TestReplica {
 
 			byte[] sendData = Serializer.serialize(udpMsg);
 			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length,
-					InetAddress.getByName(StaticContent.REPLICA_UMER_IP_ADDRESS),
-					StaticContent.REPLICA_UMER_lISTENING_PORT);
+					InetAddress.getByName(StaticContent.REPLICA_SAJJAD_IP_ADDRESS),
+					StaticContent.REPLICA_SAJJAD_lISTENING_PORT);
 			senderSocket.send(sendPacket);
 
 			// Clear Send buffer

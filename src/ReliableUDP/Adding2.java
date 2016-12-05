@@ -3,7 +3,7 @@ package ReliableUDP;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-import com.concordia.dist.asg1.Models.UDPMessage;
+import Models.UDPMessage;
 
 public class Adding2 {
 

@@ -13,9 +13,10 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.Utilities.FileStorage;
 import com.concordia.dist.asg1.Utilities.InputValidation;
+
+import Models.Enums;
 
 /**
  * @author SajjadAshrafCan

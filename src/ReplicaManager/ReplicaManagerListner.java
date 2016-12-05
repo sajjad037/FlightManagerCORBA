@@ -4,11 +4,12 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.Arrays;
 
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.UDPMessage;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.CLogger;
 import com.concordia.dist.asg1.Utilities.Serializer;
+
+import Models.Enums;
+import Models.UDPMessage;
 
 public class ReplicaManagerListner implements Runnable {
 	private CLogger clogger;
@@ -61,14 +62,14 @@ public class ReplicaManagerListner implements Runnable {
 							if (softwareFailureCount >= 3) {
 								// Restart the server.
 								softwareFailureCount = 0;
-								ReplicaManager.ReplicaManagerMain.restartReplica();
+								ReplicaManager.ReplicaManagerSajjad.restartReplica();
 							}
 							break;
 
 						case hardwareFailure:
 							// Hardware failure occured.
 							softwareFailureCount = 0;
-							ReplicaManager.ReplicaManagerMain.restartReplica();
+							ReplicaManager.ReplicaManagerSajjad.restartReplica();
 							break;
 
 						default:
@@ -105,7 +106,7 @@ public class ReplicaManagerListner implements Runnable {
 
 				if (receivedStatus) {
 					// Send Acknowledge.
-					ackMessage = new UDPMessage(Enums.UDPSender.RMUmer, udpMessage.getSequencerNumber(),
+					ackMessage = new UDPMessage(Enums.UDPSender.RMSajjad , udpMessage.getSequencerNumber(),
 							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 					ackMessage.setStatus(true);
 					byte[] sendData = Serializer.serialize(ackMessage);

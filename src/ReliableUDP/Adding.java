@@ -4,8 +4,8 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.HashMap;
 
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.UDPMessage;
+import Models.Enums;
+import Models.UDPMessage;
 
 public class Adding {
 

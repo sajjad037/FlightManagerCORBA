@@ -8,11 +8,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.Flight;
-import com.concordia.dist.asg1.Models.Response;
 import com.concordia.dist.asg1.Service.FlightService;
 import com.concordia.dist.asg1.Service.PassengerService;
+
+import Models.Enums;
+import Models.Flight;
+import Models.Response;
 
 /**
  * The class <code>PassengerServiceTest</code> contains tests for the class

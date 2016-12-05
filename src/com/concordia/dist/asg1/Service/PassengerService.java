@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.concordia.dist.asg1.DAL.PassengerDal;
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.Passenger;
-import com.concordia.dist.asg1.Models.Response;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.FileStorage;
+
+import Models.Enums;
+import Models.Passenger;
+import Models.Response;
 
 /**
  * Service layer for Passengers, Perform Necessary Function Before and After

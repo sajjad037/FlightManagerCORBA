@@ -1,13 +1,13 @@
-package com.concordia.dist.asg1.Models;
+package Models;
 
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.HashMap;
 
-import com.concordia.dist.asg1.Models.Enums.FlightCities;
-import com.concordia.dist.asg1.Models.Enums.Operations;
-import com.concordia.dist.asg1.Models.Enums.UDPMessageType;
-import com.concordia.dist.asg1.Models.Enums.UDPSender;
+import Models.Enums.FlightCities;
+import Models.Enums.Operations;
+import Models.Enums.UDPMessageType;
+import Models.Enums.UDPSender;
 
 /**
  * 

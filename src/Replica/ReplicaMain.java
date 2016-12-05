@@ -9,11 +9,12 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.UDPMessage;
 import com.concordia.dist.asg1.Server.FlightOperationsImplementation;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.CLogger;
+
+import Models.Enums;
+import Models.UDPMessage;
 
 public class ReplicaMain {
 	private static CLogger clogger;
@@ -46,8 +47,8 @@ public class ReplicaMain {
 			System.out.println(msg);
 
 			// Start UDP Server
-			ReplicaListner server = new ReplicaListner(clogger, StaticContent.REPLICA_UMER_lISTENING_PORT,
-					Enums.UDPSender.ReplicaUmer);
+			ReplicaListner server = new ReplicaListner(clogger, StaticContent.REPLICA_SAJJAD_lISTENING_PORT,
+					Enums.UDPSender.ReplicaSajjad);
 			server.start();
 
 			createServerObjects(corbaArgs, restoreBackup);
@@ -122,7 +123,7 @@ public class ReplicaMain {
 	private void restoreLogFile(UDPMessage udpMessage)
 	{
 	
-			String msg = Enums.UDPSender.ReplicaUmer + " Restore in process!";
+			String msg = Enums.UDPSender.ReplicaSajjad + " Restore in process!";
 			UDPMessage replyMessage = null;
 			
 				switch (udpMessage.getSender()) {
@@ -133,7 +134,7 @@ public class ReplicaMain {
 					System.out.println(msg);
 					clogger.log(msg);
 					
-					replyMessage = new UDPMessage(Enums.UDPSender.ReplicaUmer, udpMessage.getSequencerNumber(),
+					replyMessage = new UDPMessage(Enums.UDPSender.ReplicaSajjad, udpMessage.getSequencerNumber(),
 							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 
 					FlightOperationsImplementation obj = ReplicaMain.servers.get(udpMessage.getServerName().toString());

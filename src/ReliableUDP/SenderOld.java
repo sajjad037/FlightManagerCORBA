@@ -12,8 +12,9 @@ import java.util.Vector;
 import java.util.concurrent.Semaphore;
 import java.util.zip.CRC32;
 
-import com.concordia.dist.asg1.Models.UDPMessage;
 import com.concordia.dist.asg1.Utilities.Serializer;
+
+import Models.UDPMessage;
 
 // The following implementation uses the Go-Back-N protocol
 public class SenderOld {

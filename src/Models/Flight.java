@@ -1,8 +1,8 @@
-package com.concordia.dist.asg1.Models;
+package Models;
 
 import java.io.Serializable;
 
-import com.concordia.dist.asg1.Models.Enums.FlightCities;
+import Models.Enums.FlightCities;
 /**
  * Flight Model.
  * @author SajjadAshrafCan

@@ -1,4 +1,4 @@
-package com.concordia.dist.asg1.Models;
+package Models;
 
 /**
  * Response Model, use as return type

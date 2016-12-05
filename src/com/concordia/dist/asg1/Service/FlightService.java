@@ -6,11 +6,12 @@ package com.concordia.dist.asg1.Service;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.concordia.dist.asg1.DAL.FlightDAL;
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.Flight;
-import com.concordia.dist.asg1.Models.Response;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.FileStorage;
+
+import Models.Enums;
+import Models.Flight;
+import Models.Response;
 
 /**
  * Service layer for Flights, Perform Necessary Function Before and After saving

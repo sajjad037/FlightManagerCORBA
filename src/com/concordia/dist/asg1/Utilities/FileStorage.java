@@ -16,11 +16,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.concordia.dist.asg1.Models.Flight;
-import com.concordia.dist.asg1.Models.Passenger;
-import com.concordia.dist.asg1.Models.ServersList;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.google.gson.Gson;
+
+import Models.Flight;
+import Models.Passenger;
+import Models.ServersList;
 
 /**
  * This class is for saving a data

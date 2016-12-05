@@ -3,10 +3,10 @@ package ReplicaManager;
 import java.util.Timer;
 import java.util.logging.Logger;
 
-import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.CLogger;
 
+import Models.Enums;
 import Replica.ReplicaMain;
 
 /*
@@ -18,9 +18,9 @@ import Replica.ReplicaMain;
  * 5) Create instance of its replica but communicate through UDP ONLY.
  */
 
-public class ReplicaManagerMain {
+public class ReplicaManagerSajjad {
 	private static CLogger clogger;
-	private final static Logger LOGGER = Logger.getLogger(ReplicaManagerMain.class.getName());
+	private final static Logger LOGGER = Logger.getLogger(ReplicaManagerSajjad.class.getName());
 	public static boolean isReplicaAlive = true;
 	public static ReplicaMain myReplicaInstance = null;
 
@@ -34,8 +34,8 @@ public class ReplicaManagerMain {
 			System.out.println(msg);
 
 			// Start UDP Server
-			ReplicaManagerListner server = new ReplicaManagerListner(clogger, StaticContent.RM3_lISTENING_PORT,
-					Enums.UDPSender.ReplicaUmer);
+			ReplicaManagerListner server = new ReplicaManagerListner(clogger, StaticContent.RM2_lISTENING_PORT,
+					Enums.UDPSender.ReplicaSajjad);
 			server.start();
 			// server.executeTestMessage();
 			//server.join();

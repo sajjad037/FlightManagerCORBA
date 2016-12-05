@@ -7,8 +7,9 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.zip.CRC32;
 
-import com.concordia.dist.asg1.Models.UDPMessage;
 import com.concordia.dist.asg1.Utilities.Serializer;
+
+import Models.UDPMessage;
 
 public class Reciever {
 	static int pkt_size = 1000;

@@ -18,10 +18,6 @@ import org.omg.PortableServer.POAManagerPackage.AdapterInactive;
 import org.omg.PortableServer.POAPackage.ServantNotActive;
 import org.omg.PortableServer.POAPackage.WrongPolicy;
 
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.Passenger;
-import com.concordia.dist.asg1.Models.Response;
-import com.concordia.dist.asg1.Models.ServerConfig;
 import com.concordia.dist.asg1.Service.FlightService;
 import com.concordia.dist.asg1.Service.PassengerService;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
@@ -30,6 +26,10 @@ import com.concordia.dist.asg1.Utilities.CLogger;
 import Corba.FlightOperations;
 import Corba.FlightOperationsHelper;
 import Corba.FlightOperationsPOA;
+import Models.Enums;
+import Models.Passenger;
+import Models.Response;
+import Models.ServerConfig;
 
 /**
  * 

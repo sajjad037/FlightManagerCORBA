@@ -15,12 +15,12 @@ import org.omg.CosNaming.NamingContextExtHelper;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 
-import com.concordia.dist.asg1.Models.Enums;
-import com.concordia.dist.asg1.Models.ServerConfig;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 
 import Corba.FlightOperations;
 import Corba.FlightOperationsHelper;
+import Models.Enums;
+import Models.ServerConfig;
 
 /**
  * 

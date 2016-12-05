@@ -6,8 +6,9 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import com.concordia.dist.asg1.Models.Enums;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
+
+import Models.Enums;
 
 /**
  * Validate User inputs 
