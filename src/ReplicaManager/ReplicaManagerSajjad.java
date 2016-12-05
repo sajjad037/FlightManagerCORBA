@@ -45,7 +45,7 @@ public class ReplicaManagerSajjad {
 
 			RMHeartBeat heatBeat = new RMHeartBeat();
 			Timer timer = new Timer();
-			timer.schedule(heatBeat, 0, 15000);
+			timer.schedule(heatBeat, 0, 1500000);
 
 		} catch (Exception e) {
 			System.out.println("Sequencer Exception: " + e.getMessage());
