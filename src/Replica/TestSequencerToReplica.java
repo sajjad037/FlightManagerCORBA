@@ -22,9 +22,9 @@ public class TestSequencerToReplica {
 		HashMap<String, String> parameterMap = null;
 		int sequencer = 0;
 		//Create Flight
-//		UDPMessage udpMsg = new UDPMessage(Enums.UDPSender.Sequencer, ++sequencer, Enums.getFlightCitiesFromString("Montreal"),
+//		udpMsg = new UDPMessage(Enums.UDPSender.Sequencer, ++sequencer, Enums.getFlightCitiesFromString("Montreal"),
 //		Enums.Operations.editFlightRecord, Enums.UDPMessageType.Request);
-//		HashMap<String, String> parameterMap = new HashMap<String, String>();		
+//		parameterMap = new HashMap<String, String>();		
 //		parameterMap.put("recordID", "-1");
 //		parameterMap.put("fieldName", "createFlight");
 //		parameterMap.put("newValue", "10:10:10:2016/12/12:12;12:Washington");
@@ -67,37 +67,39 @@ public class TestSequencerToReplica {
 //		udpMsg.setManagerID("MTL1113");
 //		udpMsg.setParamters(parameterMap);
 //		udpMsg.setFrontEndPort(-1);		
+//		udpMsg.setReplyMsg("Montreal:2016/10/16:13;13");
 		
 		//Delete Flight
-//		udpMsg = new UDPMessage(Enums.UDPSender.Sequencer, ++sequencer, Enums.getFlightCitiesFromString("Montreal"),
-//		Enums.Operations.editFlightRecord, Enums.UDPMessageType.Request);
-//		parameterMap = new HashMap<String, String>();		
-//		parameterMap.put("recordID", "-1");
-//		parameterMap.put("fieldName", "deleteFlight");
-//		parameterMap.put("newValue", "1");
-//		udpMsg.setManagerID("MTL1113");
-//		udpMsg.setParamters(parameterMap);
-//		udpMsg.setFrontEndPort(-1);	
+		udpMsg = new UDPMessage(Enums.UDPSender.Sequencer, ++sequencer, Enums.getFlightCitiesFromString("Montreal"),
+		Enums.Operations.editFlightRecord, Enums.UDPMessageType.Request);
+		parameterMap = new HashMap<String, String>();		
+		parameterMap.put("recordID", "2016/12/12");
+		parameterMap.put("fieldName", "deleteFlight");
+		parameterMap.put("newValue", "1");
+		udpMsg.setManagerID("MTL1113");
+		udpMsg.setParamters(parameterMap);
+		udpMsg.setFrontEndPort(-1);	
+		udpMsg.setReplyMsg("Montreal:2016/10/16:13;13");
 		
 		//Delete Flight
 		//4) transferReservation
 		//{otherCity=NewDelhi, passengerID=1, currentCity=Washington}
 		//ManagerId, serverName will get it from UDP Message.
-		udpMsg = new UDPMessage(Enums.UDPSender.Sequencer, ++sequencer, Enums.getFlightCitiesFromString("Montreal"),
-		Enums.Operations.transferReservation, Enums.UDPMessageType.Request);
-		parameterMap = new HashMap<String, String>();		
-		parameterMap.put("passengerID", "1");
-		parameterMap.put("currentCity", "Washington");
-		parameterMap.put("otherCity", "NewDelhi");
-		udpMsg.setManagerID("MTL1113");
-		udpMsg.setParamters(parameterMap);
-		udpMsg.setFrontEndPort(-1);	
+//		udpMsg = new UDPMessage(Enums.UDPSender.Sequencer, ++sequencer, Enums.getFlightCitiesFromString("Montreal"),
+//		Enums.Operations.transferReservation, Enums.UDPMessageType.Request);
+//		parameterMap = new HashMap<String, String>();		
+//		parameterMap.put("passengerID", "1");
+//		parameterMap.put("currentCity", "Washington");
+//		parameterMap.put("otherCity", "NewDelhi");
+//		udpMsg.setManagerID("MTL1113");
+//		udpMsg.setParamters(parameterMap);
+//		udpMsg.setFrontEndPort(-1);	
 		
 		
 		
-		boolean status = UPDCall(StaticContent.REPLICA_SAJJAD_IP_ADDRESS,
-				StaticContent.REPLICA_SAJJAD_lISTENING_PORT, StaticContent.SEQUENCER_ACK_PORT_FOR_REPLICA_SAJJAD,
-				udpMsg, Enums.UDPSender.ReplicaSajjad);
+//		boolean status = UPDCall(StaticContent.REPLICA_SAJJAD_IP_ADDRESS,
+//				StaticContent.REPLICA_SAJJAD_lISTENING_PORT, StaticContent.SEQUENCER_ACK_PORT_FOR_REPLICA_SAJJAD,
+//				udpMsg, Enums.UDPSender.ReplicaSajjad);
 		
 //		boolean status = UPDCall(StaticContent.REPLICA_ULAN_IP_ADDRESS,
 //		StaticContent.REPLICA_ULAN_lISTENING_PORT, StaticContent.SEQUENCER_ACK_PORT_FOR_REPLICA_ULAN,
@@ -107,9 +109,9 @@ public class TestSequencerToReplica {
 //				StaticContent.REPLICA_UMER_lISTENING_PORT, StaticContent.SEQUENCER_ACK_PORT_FOR_REPLICA_UMER,
 //				udpMsg, Enums.UDPSender.ReplicaUmer);
 		
-//		boolean status = UPDCall(StaticContent.REPLICA_FERAS_IP_ADDRESS,
-//				StaticContent.REPLICA_FERAS_lISTENING_PORT, StaticContent.SEQUENCER_ACK_PORT_FOR_REPLICA_FERAS,
-//				udpMsg, Enums.UDPSender.ReplicaFeras);
+		boolean status = UPDCall(StaticContent.REPLICA_FERAS_IP_ADDRESS,
+				StaticContent.REPLICA_FERAS_lISTENING_PORT, StaticContent.SEQUENCER_ACK_PORT_FOR_REPLICA_FERAS,
+				udpMsg, Enums.UDPSender.ReplicaFeras);
 	}
 	
 	private static boolean UPDCall(String destinationIP, int destinationPort, int acknowledgementPort,
