@@ -70,6 +70,21 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 //
 //	}
 	
+	public void shutDownServer(){
+		 if(udpServerThread != null)
+		  {
+			 if(udpSocket != null && !udpSocket.isClosed())
+			 {
+				 udpSocket.close();	 
+			 }		   
+			 
+		   udpServerThread.stop();
+		  }
+		  if(orb != null)
+		  {
+		   orb.shutdown(false);
+		  }
+	}
 	
 	public void startServer(String serverName, int UDPPort, String[] orbArgs) {
 		//FlightOperationsImplementation myServer = new FlightOperationsImplementation();
@@ -84,17 +99,8 @@ public class FlightOperationsImplementation extends FlightOperationsPOA {
 		// initialize logger
 		clogger = new CLogger(LOGGER, "Server/" + this.ServerName + ".log");
 		
+		shutDownServer();
 		
-		 if(udpServerThread != null)
-		  {
-		   udpSocket.close();
-		   udpServerThread.stop();
-		  }
-		  if(orb == null)
-		  {
-		   orb.shutdown(false);
-		  }
-		  
 		  // create and initialize the ORB
 		  orb = ORB.init(orbArgs, null);
 

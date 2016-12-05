@@ -50,19 +50,34 @@ public class ReplicaManagerListner implements Runnable {
 				switch (udpMessage.getSender()) {
 				case FrontEnd:
 
-					if (true) {
-						// ifSoftware Failure
-						softwareFailureCount++;
-						if (softwareFailureCount >= 3) {
-							// Restart the server.
+					receivedStatus = true;
+					if (udpMessage.getFrontEndIP().equals(StaticContent.RM3_IP_ADDRESS)
+							&& udpMessage.getFrontEndPort() == StaticContent.RM3_lISTENING_PORT) {
+						switch (udpMessage.getOpernation()) {
+
+						case softwareFailure:
+							// ifSoftware Failure
+							softwareFailureCount++;
+							if (softwareFailureCount >= 3) {
+								// Restart the server.
+								softwareFailureCount = 0;
+								ReplicaManager.ReplicaManagerMain.restartReplica();
+							}
+							break;
+
+						case hardwareFailure:
+							// Hardware failure occured.
 							softwareFailureCount = 0;
 							ReplicaManager.ReplicaManagerMain.restartReplica();
-						}
-					} else if (false) {
-						// Hardware failure occured.
-						softwareFailureCount = 0;
-						ReplicaManager.ReplicaManagerMain.restartReplica();
+							break;
 
+						default:
+							msg = "Unknow Sender : " + udpMessage.getSender();
+							System.out.println(msg);
+							clogger.log(msg);
+							break;
+
+						}
 					}
 
 					break;
@@ -90,6 +105,8 @@ public class ReplicaManagerListner implements Runnable {
 
 				if (receivedStatus) {
 					// Send Acknowledge.
+					ackMessage = new UDPMessage(Enums.UDPSender.RMUmer, udpMessage.getSequencerNumber(),
+							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 					ackMessage.setStatus(true);
 					byte[] sendData = Serializer.serialize(ackMessage);
 					DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length,

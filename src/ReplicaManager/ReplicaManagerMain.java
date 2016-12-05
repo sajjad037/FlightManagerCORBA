@@ -35,7 +35,7 @@ public class ReplicaManagerMain {
 
 			// Start UDP Server
 			ReplicaManagerListner server = new ReplicaManagerListner(clogger, StaticContent.RM3_lISTENING_PORT,
-					Enums.UDPSender.ReplicaSajjad);
+					Enums.UDPSender.ReplicaUmer);
 			server.start();
 			// server.executeTestMessage();
 			//server.join();
@@ -54,6 +54,7 @@ public class ReplicaManagerMain {
 
 	public static void restartReplica() {
 		if (isReplicaAlive == false) {
+			myReplicaInstance.shutDownReplica();
 			myReplicaInstance = null;
 			myReplicaInstance = new ReplicaMain(true);
 		}

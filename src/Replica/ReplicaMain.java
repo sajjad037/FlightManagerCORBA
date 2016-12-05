@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import com.concordia.dist.asg1.Models.Enums;
@@ -13,9 +14,6 @@ import com.concordia.dist.asg1.Models.UDPMessage;
 import com.concordia.dist.asg1.Server.FlightOperationsImplementation;
 import com.concordia.dist.asg1.StaticContent.StaticContent;
 import com.concordia.dist.asg1.Utilities.CLogger;
-
-//FLIGHTSERVER is my Server Implementation class of CORBA.
-//CHANGE IT AS PER YOUR CLASS.
 
 public class ReplicaMain {
 	private static CLogger clogger;
@@ -48,17 +46,28 @@ public class ReplicaMain {
 			System.out.println(msg);
 
 			// Start UDP Server
-			ReplicaListner server = new ReplicaListner(clogger, StaticContent.REPLICA_SAJJAD_lISTENING_PORT,
-					Enums.UDPSender.ReplicaSajjad);
+			ReplicaListner server = new ReplicaListner(clogger, StaticContent.REPLICA_UMER_lISTENING_PORT,
+					Enums.UDPSender.ReplicaUmer);
 			server.start();
 
 			createServerObjects(corbaArgs, restoreBackup);
 
+			
+			
 			// server.executeTestMessage();
 			// server.join();
 
 		} catch (Exception e) {
 			System.out.println("Sequencer Exception: " + e.getMessage());
+		}
+	}
+	
+	public void shutDownReplica()
+	{
+		for(Entry<String, FlightOperationsImplementation> entry : servers.entrySet())
+		{
+			FlightOperationsImplementation temp = entry.getValue();
+			temp.shutDownServer();
 		}
 	}
 
@@ -81,113 +90,114 @@ public class ReplicaMain {
 	}
 
 	private void restoreServerTransactions() {
-
-		File folder = new File(StaticContent.RM_TRANSACTION_LOGS_PATH); // Get
-																		// the
-																		// input
-																		// file
-																		// folder.
+		
+		File folder = new File(StaticContent.RM_TRANSACTION_LOGS_PATH); // Get the input file folder.
 		File[] listOfFiles = folder.listFiles();
 
 		for (int i = 0; i < listOfFiles.length; i++) {
-			if (listOfFiles[i].isFile()) {
-				UDPMessage temp;
-				try {
-					temp = deserialize(listOfFiles[i].getName());
-					restoreLogFile(temp);
-				} catch (ClassNotFoundException | IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (listOfFiles[i].isFile()) {
+					UDPMessage temp;
+					try {
+						temp = deserialize(listOfFiles[i].getName());
+						restoreLogFile(temp);
+					} catch (ClassNotFoundException | IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 				}
-
-			}
 		}
-
+		
 	}
 
 	public static UDPMessage deserialize(String fName) throws IOException, ClassNotFoundException {
-		FileInputStream fis = new FileInputStream(StaticContent.RM_TRANSACTION_LOGS_PATH + fName);
+		FileInputStream fis = new FileInputStream(StaticContent.RM_TRANSACTION_LOGS_PATH+fName);
 		BufferedInputStream bis = new BufferedInputStream(fis);
 		ObjectInputStream ois = new ObjectInputStream(bis);
 		UDPMessage obj = (UDPMessage) ois.readObject();
 		ois.close();
 		return obj;
 	}
+	
+	private void restoreLogFile(UDPMessage udpMessage)
+	{
+	
+			String msg = Enums.UDPSender.ReplicaUmer + " Restore in process!";
+			UDPMessage replyMessage = null;
+			
+				switch (udpMessage.getSender()) {
+				case Sequencer:
+					// Perform Operations.
+					msg = "Executing Opernation : " + udpMessage.getOpernation() + ", on Server :"
+							+ udpMessage.getServerName();
+					System.out.println(msg);
+					clogger.log(msg);
+					
+					replyMessage = new UDPMessage(Enums.UDPSender.ReplicaUmer, udpMessage.getSequencerNumber(),
+							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 
-	private void restoreLogFile(UDPMessage udpMessage) {
+					FlightOperationsImplementation obj = ReplicaMain.servers.get(udpMessage.getServerName().toString());
+					String res = "";
+					switch (udpMessage.getOpernation()) {
 
-		String msg = Enums.UDPSender.ReplicaSajjad + " Restore in process!";
-		UDPMessage replyMessage = null;
+					case bookFlight:
+						
+						res = obj.bookFlight(udpMessage.getParamters().get("firstName"),
+								udpMessage.getParamters().get("lastName"), udpMessage.getParamters().get("address"),
+								udpMessage.getParamters().get("phone"), udpMessage.getParamters().get("destination"),
+								udpMessage.getParamters().get("date"), udpMessage.getParamters().get("classFlight"));
 
-		switch (udpMessage.getSender()) {
-		case Sequencer:
-			// Perform Operations.
-			msg = "Executing Opernation : " + udpMessage.getOpernation() + ", on Server :" + udpMessage.getServerName();
-			System.out.println(msg);
-			clogger.log(msg);
+						replyMessage.setReplyMsg(res);
 
-			replyMessage = new UDPMessage(Enums.UDPSender.ReplicaSajjad, udpMessage.getSequencerNumber(),
-					udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
+						break;
 
-			FlightOperationsImplementation obj = ReplicaMain.servers.get(udpMessage.getServerName().toString());
-			String res = "";
-			switch (udpMessage.getOpernation()) {
+					case getBookedFlightCount:
+						
+						res = obj.getBookedFlightCount(udpMessage.getParamters().get("recordType"));
 
-			case bookFlight:
+						replyMessage.setReplyMsg(res);
 
-				res = obj.bookFlight(udpMessage.getParamters().get("firstName"),
-						udpMessage.getParamters().get("lastName"), udpMessage.getParamters().get("address"),
-						udpMessage.getParamters().get("phone"), udpMessage.getParamters().get("destination"),
-						udpMessage.getParamters().get("date"), udpMessage.getParamters().get("classFlight"));
+						break;
 
-				replyMessage.setReplyMsg(res);
+					case editFlightRecord:
+					
+						res = obj.editFlightRecord(udpMessage.getParamters().get("recordID"),
+								udpMessage.getParamters().get("fieldName"), udpMessage.getParamters().get("newValue"));
+						replyMessage.setReplyMsg(res);
+						break;
 
-				break;
+					case transferReservation:
+						
+						res = obj.transferReservation(udpMessage.getParamters().get("passengerID"),
+								udpMessage.getParamters().get("currentCity"),
+								udpMessage.getParamters().get("otherCity"));
+						replyMessage.setReplyMsg(res);
+						break;
 
-			case getBookedFlightCount:
+					}
+					break;
 
-				res = obj.getBookedFlightCount(udpMessage.getParamters().get("recordType"));
+				case RMUlan:
+				case RMSajjad:
+				case RMUmer:
+				case RMFeras:
+					
+					
+					msg = udpMessage.getSender().toString() + " Server contacted for HeartBeat.";
+					System.out.println(msg);
+					clogger.log(msg);
+					
+					break;
 
-				replyMessage.setReplyMsg(res);
+				default:
+					msg = "Unknow Sender : " + udpMessage.getSender();
+					System.out.println(msg);
+					clogger.log(msg);
+					
+					break;
+				}
+				ReplicaListner.sequencerNumber = udpMessage.getSequencerNumber();
 
-				break;
-
-			case editFlightRecord:
-
-				res = obj.editFlightRecord(udpMessage.getParamters().get("recordID"),
-						udpMessage.getParamters().get("fieldName"), udpMessage.getParamters().get("newValue"));
-				replyMessage.setReplyMsg(res);
-				break;
-
-			case transferReservation:
-
-				res = obj.transferReservation(udpMessage.getParamters().get("passengerID"),
-						udpMessage.getParamters().get("currentCity"), udpMessage.getParamters().get("otherCity"));
-				replyMessage.setReplyMsg(res);
-				break;
-
-			}
-			break;
-
-		case RMUlan:
-		case RMSajjad:
-		case RMUmer:
-		case RMFeras:
-
-			msg = udpMessage.getSender().toString() + " Server contacted for HeartBeat.";
-			System.out.println(msg);
-			clogger.log(msg);
-
-			break;
-
-		default:
-			msg = "Unknow Sender : " + udpMessage.getSender();
-			System.out.println(msg);
-			clogger.log(msg);
-
-			break;
-		}
-		ReplicaListner.sequencerNumber = udpMessage.getSequencerNumber();
 
 	}
 
